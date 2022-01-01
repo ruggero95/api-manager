@@ -30,19 +30,14 @@ async function search_request(req, res) {
         }
 
         // Get the request data
-        const query = req.body.q || req.query.q;
+        const keywords = req.body.q || req.query.q || '';
         const lang = req.body.lang || req.query.lang || 'en'; // default: en
         const country = req.body.country || req.query.country || 'US'; // default: US
 
-        // Check the data 
-        if (!query) {
-            res.status(404).json({ code: 404, text: 'No query found', data: {} });
-            return;
-        }
-
         // Retrieve the data
         const response = await currentsapi.search({
-            keywords: query,
+            // more info: https://currentsapi.services/en/docs/search
+            keywords: keywords,
             language: lang,
             country: country
         });
