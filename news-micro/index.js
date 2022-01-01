@@ -48,10 +48,10 @@ async function search_request(req, res) {
         });
 
         // Check the result
-        if (response.status != 200) {
+        if (!response.news) {
             // Something went wrong
-            res.status(parseInt(response.status, 10)).json({
-                code: parseInt(response.status, 10),
+            res.status(response.status || 404).json({
+                code: response.status || 404,
                 text: 'Something went wrong with the News API',
                 data: {}
             });
