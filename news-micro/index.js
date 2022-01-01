@@ -39,7 +39,7 @@ async function search_request(req, res) {
 
 // Routing 
 app.get('/search', search_request);
-app.get('/search', search_request);
+app.post('/search', search_request);
 
 // Listener
 app.listen(PORT, () => {
