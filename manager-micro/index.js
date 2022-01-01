@@ -7,7 +7,7 @@ const app = express();
 // Init environments
 require('dotenv').config();
 // Get environments
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.MANAGER_PORT || 4000;
 
 // Routing
 app.get('/', (req, res) => {

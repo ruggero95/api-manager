@@ -1,0 +1,45 @@
+version: '3.9'
+
+networks:
+  manager-micro-network:
+    name: manager-micro-network
+    driver: bridge
+
+volumes:
+  manager-micro-data:
+    name: manager-micro-data
+    driver: local
+
+services:
+  manager-micro-db:
+    container_name: manager-micro-db
+    restart: always
+    image: postgres:14.1-alpine
+    volumes:
+      - manager-micro-data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    networks:
+      - manager-micro-network
+
+  manager-micro-db-web:
+    container_name: manager-micro-db-web
+    restart: always
+    image: adminer:4.8.1
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
+    networks:
+      - manager-micro-network
+
+  manager-micro-app:
+    container_name: manager-micro-app
+    restart: always
+    build: .
+    ports:
+      - 4000:4000
+    env_file:
+      - .env
+    networks:
+      - manager-micro-network
