@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 // Init body parser
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 // Define the function to manage search requests
 async function search_request(req, res) {
@@ -19,8 +20,19 @@ async function search_request(req, res) {
     try {
 
         // Check the request
-        if (!req || !req.body) {
-            res.status(404).json({ code: 404, text: 'No request data found', data: null });
+        if (!req || (!req.body && !req.query)) {
+            res.status(404).json({ code: 404, text: 'No request data found', data: {} });
+            return;
+        }
+
+        // Get the request data
+        const query = req.body.q || req.query.q;
+        const lang = req.body.lang || req.query.lang || 'en'; // default: en
+        const country = req.body.country || req.query.country || 'US'; // default: US
+
+        // Check the data 
+        if (!query) {
+            res.status(404).json({ code: 404, text: 'No query found', data: {} });
             return;
         }
 
