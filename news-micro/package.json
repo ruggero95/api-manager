@@ -1,0 +1,13 @@
+{
+  "name": "news-micro",
+  "version": "1.0.0",
+  "description": "News microservice of api-manager",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "news"
+  ],
+  "author": "derogab,ruggero95"
+}
