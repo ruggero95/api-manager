@@ -1,0 +1,14 @@
+{
+  "name": "manager-micro",
+  "version": "1.0.0",
+  "description": "Manager microservice of api-manager",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "manager"
+  ],
+  "author": "derogab,ruggero95",
+  "license": "ISC"
+}
