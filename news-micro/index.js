@@ -18,6 +18,12 @@ async function search_request(req, res) {
     // Manage the request
     try {
 
+        // Check the request
+        if (!req || !req.body) {
+            res.status(404).json({ code: 404, text: 'No request data found', data: null });
+            return;
+        }
+
         // Reply with the result
         res.status(200).json({
             code: 200,
