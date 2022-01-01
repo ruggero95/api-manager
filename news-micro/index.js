@@ -1,6 +1,7 @@
 // Dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
+const CurrentsAPI = require('currentsapi');
 
 // Init environments
 require('dotenv').config();
@@ -12,6 +13,9 @@ const app = express();
 // Init body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+// Init the NEWS
+const currentsapi = new CurrentsAPI(process.env.CURRENTS_API_KEY);
 
 // Define the function to manage search requests
 async function search_request(req, res) {
@@ -36,12 +40,30 @@ async function search_request(req, res) {
             return;
         }
 
-        // Reply with the result
-        res.status(200).json({
-            code: 200,
-            text: 'News successfully downloaded',
-            data: {}
+        // Retrieve the data
+        const response = await currentsapi.search({
+            keywords: query,
+            language: lang,
+            country: country
         });
+
+        // Check the result
+        if (response.status != 200) {
+            // Something went wrong
+            res.status(parseInt(response.status, 10)).json({
+                code: parseInt(response.status, 10),
+                text: 'Something went wrong with the News API',
+                data: {}
+            });
+        }
+        else {
+            // Reply with the result
+            res.status(200).json({
+                code: 200,
+                text: 'News successfully downloaded',
+                data: response
+            });
+        }
 
     } catch (error) {
         // Log the error
@@ -50,7 +72,7 @@ async function search_request(req, res) {
         res.status(505).json({
             code: 505,
             text: 'Internal Server Error',
-            data: null
+            data: {}
         });
     }
 }
