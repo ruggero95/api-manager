@@ -1,5 +1,6 @@
 // Dependencies
 const express = require('express');
+const bodyParser = require('body-parser');
 
 // Init environments
 require('dotenv').config();
@@ -8,6 +9,8 @@ const PORT = process.env.PORT || 3000;
 
 // Init webserver
 const app = express();
+// Init body parser
+app.use(bodyParser.json());
 
 // Define the function to manage search requests
 async function search_request(req, res) {
