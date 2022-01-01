@@ -1,0 +1,18 @@
+version: '3.9'
+
+networks:
+  news-micro-network:
+    name: news-micro-network
+    driver: bridge
+
+services:
+  news-micro-app:
+    container_name: news-micro-app
+    restart: always
+    build: .
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    networks:
+      - news-micro-network
