@@ -10,9 +10,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// Init database
-const client = new Client();
-
 // Init environments
 require('dotenv').config();
 // Get environments
@@ -41,6 +38,8 @@ async function get_news(keywords, lang, country) {
 // Define a function to return data of an API KEY
 async function get_plan(api_key) {
 
+  // Init database
+  const client = new Client();
   // Connect to database
   client.connect();
 
