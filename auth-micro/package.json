@@ -1,7 +1,7 @@
 {
-  "name": "progettolab",
+  "name": "auth-micro",
   "version": "1.0.0",
-  "description": "",
+  "description": "Auth microservice of api-manager",
   "main": "index.js",
   "scripts": {
     "temp": "npm run build && node build/index.js",
@@ -10,9 +10,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "auth"
+  ],
+  "author": "ruggero95,derogab",
   "dependencies": {
     "crypto-js": "^4.1.1",
     "dayjs": "^1.10.7",
