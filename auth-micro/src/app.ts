@@ -23,14 +23,5 @@ app.use(mainRouter)
 app.use((req:Request, res:Response, next: NextFunction)=> next(new NotFoundError()));
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    if (err instanceof ErrorResponse) {
-        ErrorResponse.handle(err, res)
-    } else {
-        if (process.env.NODE_ENV === 'development') {
-            const error = err.stack ? err.stack : (err.message ? err.message : err.toString())
-            logger.error(error);
-            return new InternalErrorResponse(error).send(res)
-        }
-        ErrorResponse.handle(new InternalError(), res);
-    }
+    return ErrorResponse.handle(err, res)    
 })
