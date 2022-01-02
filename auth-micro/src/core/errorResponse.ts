@@ -1,5 +1,6 @@
 import { AuthFailureResponse,ForbiddenResponse,BadRequestResponse,NotFoundResponse,InternalErrorResponse } from "./apiResponse";
 import { Response } from "express"
+import { logger } from "./logger";
 
 enum ErrorType {
     BAD_TOKEN = 'BadTokenError',
@@ -40,10 +41,14 @@ export abstract class ErrorResponse extends Error {
             case ErrorType.FORBIDDEN:
                 return new ForbiddenResponse(err.message).send(res);
             default: {
-                let message = err.message;
                 // Do not send failure message in production as it may send sensitive data
                 //if (environment === 'production') message = 'Something wrong happened.';
-                return new InternalErrorResponse(message).send(res);
+                if (process.env.NODE_ENV === 'development') {
+                  const error = err.stack ? err.stack : (err.message ? err.message : err.toString())
+                  logger.error(error);
+                  return new InternalErrorResponse(error).send(res)
+                }
+                return new InternalErrorResponse().send(res);
             }
         }
     }
