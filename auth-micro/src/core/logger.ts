@@ -1,7 +1,6 @@
 import * as winston from "winston"
 import {format} from "winston"
 import * as dotenv from "dotenv"
-dotenv.config({path:'./../../.env'})
 
 export const logger = winston.createLogger({
     level: 'info',

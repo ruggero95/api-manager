@@ -1,4 +1,4 @@
-import { AuthFailureResponse } from "core/apiResponse";
+import { AuthFailureResponse } from "./../../core/apiResponse";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken"
 

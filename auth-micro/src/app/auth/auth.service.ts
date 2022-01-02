@@ -1,8 +1,8 @@
-import { logger } from 'core/logger'
+import { logger } from './../../core/logger'
 import { IUser, User } from './../user/user.model'
 import { Token } from "./token.model"
 import jwt from "jsonwebtoken"
-import { AuthFailureError } from 'core/errorResponse'
+import { AuthFailureError } from './../../core/errorResponse'
 
 export class AuthService {
     public async login(username: string, password: string) {
