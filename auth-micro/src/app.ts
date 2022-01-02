@@ -1,9 +1,9 @@
-import { logger, myStream } from "./core/logger";
+import { myStream } from "./core/logger";
 import express, { NextFunction, Request, Response } from "express"
 import morgan from "morgan"
 import helmet from "helmet";
-import { InternalErrorResponse, SuccessResponse } from "./core/apiResponse";
-import { ErrorResponse, InternalError, NotFoundError } from "./core/errorResponse";
+import { SuccessResponse } from "./core/apiResponse";
+import { ErrorResponse, NotFoundError } from "./core/errorResponse";
 //import {DB} from './config/db'
 import {DB} from './config/db'
 import {router as mainRouter} from './app/index.controller'
