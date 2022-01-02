@@ -17,7 +17,7 @@ enum ErrorType {
 
 
 export abstract class ErrorResponse extends Error {
-    public static data;
+    public static data:any;
     constructor(public type: ErrorType, public message: string = 'error', data:any = null) {
         super(type);
         ErrorResponse.data = data

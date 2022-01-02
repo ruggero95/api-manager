@@ -27,9 +27,9 @@ router.post('/check-user', AuthMiddleware.checkToken, async (req:Request, res:Re
         if(!token){
             return new AuthFailureResponse('Token not valid').send(res)
         }
-        const result = await (new AuthService()).checkUser(token)
-        if(result){
-            return new SuccessResponse('Token valid').send(res)
+        const payload = await (new AuthService()).checkUser(token)
+        if(payload){
+            return new SuccessResponse('Token valid',{payload:payload}).send(res)
         }
         return new AuthFailureResponse('Token not valid').send(res)
 

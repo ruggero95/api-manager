@@ -25,7 +25,7 @@ export class AuthService {
         return user
     }
 
-    public async checkUser(tokenString: string):Promise<boolean> {
+    public async checkUser(tokenString: string):Promise<any> {
         //check user con il token
         try{
             const payload:any = await jwt.verify(tokenString, process.env.ACCESS_TOKEN)
@@ -33,7 +33,7 @@ export class AuthService {
             if(!token || (Array.isArray(token) && token.length==0)){
                 throw(new AuthFailureError('Token not registered'))
             }            
-            return true
+            return payload
         }catch(e){
             throw(new AuthFailureError('Token not valid'))
         }
