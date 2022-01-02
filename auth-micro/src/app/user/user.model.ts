@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken"
 import { CostantEnum } from "./../../config/constants";
 import sha256 from "crypto-js/sha256";
 export interface IUser{
+    _id:Types.ObjectId;
     username:string;
     password:string;
     tokens:Types.ObjectId;

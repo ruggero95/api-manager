@@ -2,6 +2,7 @@ import { CostantEnum } from "./../../config/constants";
 import mongoose, { Types } from "mongoose"
 
 interface IToken{
+    _id:Types.ObjectId;
     token:string;
     userId:Types.ObjectId;
     createdAt: any,
