@@ -41,7 +41,7 @@ async function manage_request(req, res) {
 
     // Check the request
     if (!req || (!req.body && !req.query)) {
-      res.status(404).json({ code: 404, text: 'No request data found', data: {} });
+      res.status(404).json({ code: 404, text: 'No request data found', news: [] });
       return;
     }
 
@@ -53,7 +53,7 @@ async function manage_request(req, res) {
 
     // Check the api_key
     if (!api_key) {
-      res.status(401).json({ code: 401, text: 'Unauthorized: api_key is required', data: {} });
+      res.status(401).json({ code: 401, text: 'Unauthorized: api_key is required', news: [] });
       return;
     }
 
@@ -91,7 +91,7 @@ async function manage_request(req, res) {
         code: news.code || 500,
         text: news.text || 'Something went wrong',
         auth: auth,
-        data: {}
+        news: []
       });
     }
     else if (!news.data) {
@@ -100,7 +100,7 @@ async function manage_request(req, res) {
         code: 404,
         text: 'No news found',
         auth: auth,
-        data: {}
+        news: []
       });
     }
     else {
@@ -109,7 +109,7 @@ async function manage_request(req, res) {
         code: 200,
         text: 'News data successfully downloaded',
         auth: auth,
-        data: news.data
+        news: news.data
       });
     }
 
@@ -121,7 +121,7 @@ async function manage_request(req, res) {
       code: 500,
       text: 'Internal Server Error',
       auth: {},
-      data: {}
+      news: []
     });
   }
 }
