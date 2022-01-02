@@ -36,7 +36,7 @@ async function get_news(keywords, lang, country) {
 }
 
 // Define a function to return data of an API KEY
-async function get_plan(api_key) {
+async function get_plan_by_key(api_key) {
 
   // Init database
   const client = new Client();
@@ -62,9 +62,34 @@ async function get_plan(api_key) {
   }
 }
 
+async function get_plan_by_user(user_id) {
+
+  // Init database
+  const client = new Client();
+  // Connect to database
+  client.connect();
+
+  // Get plan data
+  let res = null;
+  try {
+    res = await client.query('SELECT user_name AS name, max_requests AS maxr FROM plans WHERE user_id = $1', [user_id]);
+  } catch (error) {
+    console.log('Failed to get plan data. Error: ', error);
+  }
+
+  // Close the connectio
+  client.end();
+
+  // Return the plan data
+  return {
+    user_name: res.rows[0].name,
+    max_requests: res.rows[0].maxr,
+  }
+}
+
 // Define the function to manage the received request
 async function manage_request(req, res) {
-  // Manage the request
+  // Manage the request "news"
   try {
 
     // Check the request
@@ -86,7 +111,7 @@ async function manage_request(req, res) {
     }
 
     // Check the plan
-    const plan = await get_plan(api_key);
+    const plan = await get_plan_by_key(api_key);
     console.log('Plan: ', plan);
     // @TODO: Check if api_key is valid and if it is possible to make other requests
 
@@ -152,9 +177,84 @@ async function manage_request(req, res) {
   }
 }
 
+async function get_plan(req, res) {
+  // Manage the request "plan"
+  try {
+
+    // Check the request
+    if (!req || (!req.body && !req.query)) {
+      res.status(404).json({ code: 404, text: 'No request data found', plan: {} });
+      return;
+    }
+
+    // Get the token data
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+
+    // Check the token
+    if (!token) {
+      res.status(401).json({ code: 401, text: 'Unauthorized: token is required', plan: {} });
+      return;
+    }
+
+    // Verify the user
+    let response = null;
+    const host = process.env.AUTH_HOST || 'http://localhost';
+    const port = process.env.AUTH_PORT || '5000';
+    try {
+      response = await axios.post(host + ':' + port + '/auth/check-user', {
+        token: token,
+      });
+    } catch (error) {
+      console.log('Manager fails to get the plan. Error: ', error);
+    }
+
+    // Check the user
+    if (!response || !response.user_id) {
+      res.status(401).json({ code: 401, text: 'No auth: user not found, token is not valid', plan: {} });
+      return;
+    }
+    
+    // Check the plan
+    const plan = await get_plan_by_user(user_id);
+
+    // Check the plan
+    if (!plan) {
+      // Response is OK but no data downloaded
+      res.status(news.code).json({
+        code: 404,
+        text: 'No news found',
+        plan: {}
+      });
+    }
+    else {
+      // Reply with the result
+      res.status(200).json({
+        code: 200,
+        text: 'Plan data successfully downloaded',
+        plan: plan
+      });
+    }
+
+  } catch (error) {
+    // Log the error
+    console.log('Something went wrong. Error: ', error); 
+    // Reply 
+    res.status(500).json({
+      code: 500,
+      text: 'Internal Server Error',
+      plan: {}
+    });
+  }
+}
+
 // Routing
-app.get('/', manage_request);
-app.post('/', manage_request);
+app.get('/news', manage_request);
+app.post('/news', manage_request);
+
+app.get('/plan', get_plan);
+app.post('/plan', get_plan);
+
 
 // Listener
 app.listen(PORT, () => {
