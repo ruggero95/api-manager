@@ -1,7 +1,7 @@
 // Dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
-const CurrentsAPI = require('currentsapi');
+var tiny = require('tiny-json-http');
 
 // Init environments
 require('dotenv').config();
@@ -14,8 +14,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// Init the NEWS
-const currentsapi = new CurrentsAPI(process.env.CURRENTS_API_KEY);
 
 // Define the function to manage search requests
 async function search_request(req, res) {
@@ -35,18 +33,18 @@ async function search_request(req, res) {
         const country = req.body.country || req.query.country || 'US'; // default: US
 
         // Retrieve the data
-        const response = await currentsapi.search({
-            // more info: https://currentsapi.services/en/docs/search
-            keywords: keywords,
-            language: lang,
-            country: country
-        });
+        var url = 'https://api.currentsapi.services/v1/search'
+                + '?keywords=' + keywords 
+                + '&language=' + lang 
+                + '&country=' + country
+                + '&apiKey=' + process.env.CURRENTS_API_KEY;
+        const response = await tiny.get({url});
 
         // Check the result
-        if (!response || !response.news) {
+        if (!response || !response.body || !response.body.news) {
             // Something went wrong
-            res.status(response.status || 404).json({
-                code: response.status || 404,
+            res.status(response.body.status || 404).json({
+                code: response.body.status || 404,
                 text: 'No news found',
                 data: []
             });
@@ -56,7 +54,7 @@ async function search_request(req, res) {
             res.status(200).json({
                 code: 200,
                 text: 'News successfully downloaded',
-                data: response.news
+                data: response.body.news
             });
         }
 
