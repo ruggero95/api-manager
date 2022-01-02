@@ -25,7 +25,7 @@ async function search_request(req, res) {
 
         // Check the request
         if (!req || (!req.body && !req.query)) {
-            res.status(404).json({ code: 404, text: 'No request data found', data: {} });
+            res.status(400).json({ code: 400, text: 'Bad request: no request data found', data: [] });
             return;
         }
 
@@ -43,12 +43,12 @@ async function search_request(req, res) {
         });
 
         // Check the result
-        if (!response.news) {
+        if (!response || !response.news) {
             // Something went wrong
             res.status(response.status || 404).json({
                 code: response.status || 404,
-                text: 'Something went wrong with the News API',
-                data: {}
+                text: 'No news found',
+                data: []
             });
         }
         else {
@@ -56,7 +56,7 @@ async function search_request(req, res) {
             res.status(200).json({
                 code: 200,
                 text: 'News successfully downloaded',
-                data: response
+                data: response.news
             });
         }
 
@@ -64,10 +64,10 @@ async function search_request(req, res) {
         // Log the error
         console.log('Something went wrong. Error: ', error); 
         // Reply 
-        res.status(505).json({
-            code: 505,
+        res.status(500).json({
+            code: 500,
             text: 'Internal Server Error',
-            data: {}
+            data: []
         });
     }
 }
