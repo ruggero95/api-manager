@@ -1,4 +1,4 @@
-import { BadRequestResponse, SuccessResponse } from "./../../core/apiResponse"
+import { AuthFailureResponse, BadRequestResponse, SuccessResponse } from "./../../core/apiResponse"
 import express, { NextFunction, Request, Response } from "express"
 export const router  = express.Router()
 import { AuthService } from "./auth.service"
@@ -23,17 +23,32 @@ router.post('/login', async (req:Request, res:Response, next:NextFunction)=>{
 router.post('/check-user', AuthMiddleware.checkToken, async (req:Request, res:Response,next:NextFunction)=>{
     try{
         //token checked inside middlewhare, if is not valid it will not enter the function.
-        //skip checking on db
-        return new SuccessResponse('Token valido').send(res)
+        const token  = req.body.token
+        if(!token){
+            return new AuthFailureResponse('Token not valid').send(res)
+        }
+        const result = await (new AuthService()).checkUser(token)
+        if(result){
+            return new SuccessResponse('Token valid').send(res)
+        }
+        return new AuthFailureResponse('Token not valid').send(res)
+
     }catch(e){
         next(e)
     }
 })
 
-router.post('/logout', AuthMiddleware.checkToken, (req:Request, res:Response, next:NextFunction)=>{
+router.post('/logout', AuthMiddleware.checkToken, async (req:Request, res:Response, next:NextFunction)=>{
     try{
-        const token = req.body.username
-
+        const token  = req.body.token
+        if(!token){
+            return new AuthFailureResponse('Token not valid').send(res)
+        }
+        const result = await (new AuthService()).logout(token)
+        if(result){
+            return new SuccessResponse('Logout successfuly').send(res)
+        }
+        return new BadRequestResponse('Logout failed').send(res)
     }catch(e){
         next(e)
     }
