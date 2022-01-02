@@ -1,4 +1,4 @@
-import { AccessTokenError } from "core/errorResponse";
+import { AuthFailureResponse } from "core/apiResponse";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken"
 
@@ -7,16 +7,16 @@ export class AuthMiddleware{
         const authHeader = req.headers['authorization']
         const token = authHeader && authHeader.split(' ')[1]
         if (token == null) {
-            throw(new AccessTokenError('Missing Access token'))
+            return new AuthFailureResponse('Missing access token').send(res)
         }
-        jwt.verify(token, process.env.ACCESS_TOKEN , function(err: jwt.VerifyErrors | null, payload: jwt.JwtPayload){
-            if(!payload.username){
-                throw(new AccessTokenError('Missing payload token'))
+        return jwt.verify(token, process.env.ACCESS_TOKEN , function(err: jwt.VerifyErrors | null, payload: jwt.JwtPayload){
+            if(!payload || !payload.username){
+                return new AuthFailureResponse('Token not valid').send(res)
             }
             if(err){
-                throw(new AccessTokenError('Token not valid'))
+                return new AuthFailureResponse('Token not valid, err').send(res)
             }
-
+            req.body.token = token
             return next()
         })
     }
