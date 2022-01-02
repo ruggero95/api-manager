@@ -12,3 +12,14 @@ Content-Type: application/json
     "password":"password"
 }
 
+###
+POST http://localhost:4003/auth/check-user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDE4Mzg5NTllNGFkYWViOTQzYjQwNCIsInVzZXJuYW1lIjoidGVzdCIsImlhdCI6MTY0MTEyMDY0OSwiZXhwIjoxNjQxMjkzNDQ5fQ.4imI5mwVjs8WIb7LXCWRVYP_8n-najtUx4nexBBqDHI
+
+###
+POST http://localhost:4003/auth/logout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDE4Mzg5NTllNGFkYWViOTQzYjQwNCIsInVzZXJuYW1lIjoidGVzdCIsImlhdCI6MTY0MTEyMDY0OSwiZXhwIjoxNjQxMjkzNDQ5fQ.4imI5mwVjs8WIb7LXCWRVYP_8n-najtUx4nexBBqDHI
+
+
