@@ -7,14 +7,24 @@
 <script>
 import { computed } from '@vue/composition-api'
 import { useRouter } from '@/utils'
-import LayoutBlank from '@/layouts/Blank.vue'
-import LayoutContent from '@/layouts/Content.vue'
+import LayoutBlank from '@/my-layouts/Blank.vue'
+import LayoutContent from '@/my-layouts/Content.vue'
 
 export default {
   components: {
     LayoutBlank,
     LayoutContent
   },
+  mounted() {
+        const theme = localStorage.getItem("theme");
+        if (theme) {
+            if (theme == "true") {
+                this.$vuetify.theme.dark = true;
+            } else {
+                this.$vuetify.theme.dark = false;
+            }
+        }
+    },
   setup() {
     const { route } = useRouter()
 
