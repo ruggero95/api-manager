@@ -1,3 +1,4 @@
+import { store } from "../mystore"
 import { authApi } from "./auth.api"
 export const authService = {
     checkLoginVue: async () => {
@@ -7,6 +8,7 @@ export const authService = {
                 return false
             }
             const checkUser = await authApi.checkUser()
+            store.state.user = checkUser.data.payload
             if (checkUser.error == "true") {
                 return false
             }
@@ -23,6 +25,5 @@ export const authService = {
             return true;
         }
         return false;
-    }
-
+    },
 }

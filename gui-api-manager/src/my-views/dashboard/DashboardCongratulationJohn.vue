@@ -3,7 +3,7 @@
     <v-row class="ma-0 pa-0">
       <v-col cols="8">
         <v-card-title class="text-no-wrap pt-1 ps-2">
-          Congratulations John! 🥳
+          Congratulations {{username}}! 🥳
         </v-card-title>
         <v-card-subtitle class="text-no-wrap ps-2">
           You have won Trophy
@@ -11,14 +11,14 @@
         <v-card-text class="d-flex align-center mt-2 pb-2 ps-2">
           <div>
             <p class="text-xl font-weight-semibold primary--text mb-2">
-              $42.8k
+              {{this.requests}} requests
             </p>
 
             <v-btn
               small
               color="primary"
             >
-              View Sales
+              Try api
             </v-btn>
           </div>
         </v-card-text>
@@ -43,7 +43,25 @@
     </v-row>
   </v-card>
 </template>
-
+<script>
+import { store } from '@/app/mystore'
+export default {
+  data(){
+    return {
+      requests:0,
+      localStore: store
+    }
+  },
+  computed:{
+    username(){
+      return this.localStore.state.user.username
+    },
+  },
+  setup() {
+    
+  },
+}
+</script>
 <style lang="scss" scoped>
 .greeting-card {
   position: relative;
