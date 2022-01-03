@@ -15,5 +15,14 @@ export const authService = {
             return false
         }
        
+    },
+    logout: async ()=>{
+        const result = await authApi.logout()
+        if(result.error==false){
+            localStorage.removeItem('token')
+            return true;
+        }
+        return false;
     }
+
 }
