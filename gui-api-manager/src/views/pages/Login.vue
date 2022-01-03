@@ -133,7 +133,6 @@ export default {
       try{
         if(this.username!='' && this.password!=''){
           await authApi.login(this.username, this.password)
-          localStorage.setItem('is')
           this.loginMessage = 'Login Successful'
           setTimeout(function(){
             router.push('/dashboard')

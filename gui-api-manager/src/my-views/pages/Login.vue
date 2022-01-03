@@ -36,7 +36,7 @@
         <!-- login form -->
         <v-card-text>
         
-          <ShowMessage  v-if="localStore.state.isLogged" :type="this.typeLogin" :message="this.loginMessage"></ShowMessage>
+          <ShowMessage  v-if="this.showMessage" :type="this.typeLogin" :message="this.loginMessage"></ShowMessage>
           <v-form>
             <v-text-field
               v-model="username"
@@ -122,6 +122,7 @@ export default {
     return {
       localStore:store,
       loginMessage:'',
+      showMessage:false,
       typeLogin:'',
       username:'',
       password:''
@@ -130,19 +131,22 @@ export default {
   methods:{
     async login(){      
       this.typeLogin="success"
+      this.showMessage = false
       try{
         if(this.username!='' && this.password!=''){
           await authApi.login(this.username, this.password)
-          localStorage.setItem('is')
           this.loginMessage = 'Login Successful'
+          this.showMessage = true
           setTimeout(function(){
             router.push('/dashboard')
           },1000)
         }
       }catch(e){
-        this.loginMessage = 'Error'
+        this.showMessage = true
+        this.loginMessage = e.message
         this.typeLogin="error"
         alert('error')
+
       }
     }
   },

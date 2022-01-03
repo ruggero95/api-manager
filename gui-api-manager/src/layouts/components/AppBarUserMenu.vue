@@ -146,7 +146,7 @@
           </v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>Logout</v-list-item-title>
+          <v-list-item-title @click="logout">Logout</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -164,8 +164,18 @@ import {
   mdiHelpCircleOutline,
   mdiLogoutVariant,
 } from '@mdi/js'
+import { authService } from '@/app/auth/auth.service'
+import router from '@/router'
 
 export default {
+  methods:{
+    async logout(){
+      const logout = await authService.logout()
+      if(logout){
+        router.push('/login')
+      }
+    }
+  },
   setup() {
     return {
       icons: {
