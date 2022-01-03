@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configmap
+data:
+  pg_host: manager-micro-db
+  pg_port: '5432'
+  pg_db: manager_micro_db
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+type: Opaque
+data: 
+  pg_user: {{REPLACE_HERE_PG_USER}}
+  pg_pass: {{REPLACE_HERE_PG_PASS}}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: manager-micro-postgres-statefulset
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:14.1-alpine
+        env:
+          - name: POSTGRES_DB
+            valueFrom: 
+              configMapKeyRef:
+                name: postgres-configmap
+                key: pg_db
+          - name: POSTGRES_USER
+            valueFrom: 
+              secretKeyRef:
+                name: postgres-secret
+                key: pg_user
+          - name: POSTGRES_PASSWORD
+            valueFrom: 
+              secretKeyRef:
+                name: postgres-secret
+                key: pg_pass
+        ports:
+        - containerPort: 5432
+          name: postgres-port
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/postgresql/data/
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

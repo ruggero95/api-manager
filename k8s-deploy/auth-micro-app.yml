@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-micro-configmap
+data:
+  node_env: development
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: auth-micro-secret
+type: Opaque
+data: 
+  access_token: {{REPLACE_HERE_ACCESS_TOKEN}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: auth-micro
+  name: auth-micro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-micro
+  template:
+    metadata:
+      labels:
+        app: auth-micro
+    spec:
+      containers:
+      - image: ghcr.io/ruggero95/api-manager/auth-micro:latest
+        imagePullPolicy: IfNotPresent
+        name: auth-micro
+        env:
+          - name: NODE_ENV
+            valueFrom: 
+              configMapKeyRef:
+                name: auth-micro-configmap
+                key: node_env
+          - name: ACCESS_TOKEN
+            valueFrom: 
+              secretKeyRef:
+                name: auth-micro-secret
+                key: access_token
+          - name: ME_CONFIG_MONGODB_SERVER
+            valueFrom: 
+              configMapKeyRef:
+                name: mongodb-configmap
+                key: database_url
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom: 
+              secretKeyRef:
+                name: mongodb-secret
+                key: mongo-root-username
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom: 
+              secretKeyRef:
+                name: mongodb-secret
+                key: mongo-root-password
+          - name: MONGO_INITDB_DATABASE
+            valueFrom: 
+              configMapKeyRef:
+                name: mongodb-configmap
+                key: database_name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: auth-micro
+  name: auth-micro-service
+spec:
+  ports:
+  - port: 4003
+    protocol: TCP
+    targetPort: 4003
+  selector:
+    app: auth-micro
+  #type: ClusterIP se uso ingress dopo
+  type: LoadBalancer

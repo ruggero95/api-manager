@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: manager-micro-configmap
+data:
+  manager_port: '4000'
+  news_host: http://localhost
+  news_port: '3000'
+  auth_host: http://localhost
+  auth_port: '5000'
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: manager-micro
+  name: manager-micro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: manager-micro
+  template:
+    metadata:
+      labels:
+        app: manager-micro
+    spec:
+      containers:
+      - image: ghcr.io/ruggero95/api-manager/manager-micro:latest
+        imagePullPolicy: Always
+        name: manager-micro
+        env:
+          - name: MANAGER_PORT
+            valueFrom: 
+              configMapKeyRef:
+                name: manager-micro-configmap
+                key: manager_port
+          - name: NEWS_HOST
+            valueFrom: 
+              configMapKeyRef:
+                name: manager-micro-configmap
+                key: news_host
+          - name: NEWS_PORT
+            valueFrom: 
+              configMapKeyRef:
+                name: manager-micro-configmap
+                key: news_port
+          - name: AUTH_HOST
+            valueFrom: 
+              configMapKeyRef:
+                name: manager-micro-configmap
+                key: auth_host
+          - name: AUTH_PORT
+            valueFrom: 
+              configMapKeyRef:
+                name: manager-micro-configmap
+                key: auth_port
+          - name: PGHOST
+            valueFrom: 
+              configMapKeyRef:
+                name: postgres-configmap
+                key: pg_host
+          - name: PGPORT
+            valueFrom: 
+              configMapKeyRef:
+                name: postgres-configmap
+                key: pg_port
+          - name: PGDATABASE
+            valueFrom: 
+              configMapKeyRef:
+                name: postgres-configmap
+                key: pg_db
+          - name: PGUSER
+            valueFrom: 
+              secretKeyRef:
+                name: postgres-secret
+                key: pg_user
+          - name: PGPASSWORD
+            valueFrom: 
+              secretKeyRef:
+                name: postgres-secret
+                key: pg_pass
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: manager-micro
+  name: manager-micro-service
+spec:
+  ports:
+  - port: 4000
+    protocol: TCP
+    targetPort: 4000
+  selector:
+    app: manager-micro
+  #type: ClusterIP se uso ingress dopo
+  type: LoadBalancer
