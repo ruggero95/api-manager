@@ -15,7 +15,7 @@ const routes = [
     meta:{
       requiresAuth:true
     },
-    component: () => import('@/views/dashboard/Dashboard.vue'),
+    component: () => import('@/my-views/dashboard/Dashboard.vue'),
   },
   {
     path: '/typography',
@@ -50,7 +50,7 @@ const routes = [
   {
     path: '/login',
     name: 'pages-login',
-    component: () => import('@/views/pages/Login.vue'),
+    component: () => import('@/my-views/pages/Login.vue'),
     meta: {
       layout: 'blank',
     },
@@ -66,7 +66,7 @@ const routes = [
   {
     path: '/error-404',
     name: 'error-404',
-    component: () => import('@/views/Error.vue'),
+    component: () => import('@/my-views/Error.vue'),
     meta: {
       layout: 'blank',
     },
