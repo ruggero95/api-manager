@@ -36,6 +36,8 @@ jobs:
           mkdir .ssh
           echo "${{ secrets.SSH_PUBLIC_KEY }}" > .ssh/key.pub
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > .ssh/key
+          sudo chmod 600 .ssh/key.pub
+          sudo chmod 600 .ssh/key
           ssh-add .ssh/key
       # Exec simple command in VM
       - name: Exec simple command in VM
