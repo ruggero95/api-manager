@@ -1,7 +1,7 @@
 // Dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
-const fetch = require('node-fetch');
+const superagent = require('superagent');
 
 // Init environments
 require('dotenv').config();
@@ -38,14 +38,13 @@ async function search_request(req, res) {
                 + '&language=' + lang 
                 + '&country=' + country
                 + '&apiKey=' + process.env.CURRENTS_API_KEY;
-        const r = await fetch(url);
-        const response = await r.json();
+        const response = await superagent.get(url);
 
         // Check the result
-        if (!response || !response.news) {
+        if (!response || !response.body || !response.body.news) {
             // Something went wrong
-            res.status(response.status || 404).json({
-                code: response.status || 404,
+            res.status(response.body.status || 404).json({
+                code: response.body.status || 404,
                 text: 'No news found',
                 data: []
             });
@@ -55,7 +54,7 @@ async function search_request(req, res) {
             res.status(200).json({
                 code: 200,
                 text: 'News successfully downloaded',
-                data: response.news
+                data: response.body.news
             });
         }
 
