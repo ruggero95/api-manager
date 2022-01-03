@@ -29,5 +29,13 @@ jobs:
               sed -i "s|{{REPLACE_HERE_PG_PASS}}|${{ secrets.MANAGER_MICRO_PG_PASS }}|g" $filename
           done
           echo "All secrets replaced."
-
+      # Add SSH key
+      - name: Add SSH key
+        run: |
+          eval $(ssh-agent -s)
+          ssh-add <(echo "${{ secrets.SSH_PRIVATE_KEY }}")
+      # Exec simple command in VM
+      - name: Exec simple command in VM
+        run: |
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} "ls -la"
 
