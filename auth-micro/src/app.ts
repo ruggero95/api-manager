@@ -7,12 +7,18 @@ import { ErrorResponse, NotFoundError } from "./core/errorResponse";
 //import {DB} from './config/db'
 import {DB} from './config/db'
 import {router as mainRouter} from './app/index.controller'
+import {cors} from "cors"
 export const app = express()
+const corsOptions = {
+    origin:true,
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    exposeHeaders:['*','Content-Disposition']
+}
 new DB().init()
 app.use(morgan('tiny',{stream:myStream}))
 app.use(helmet())
 app.use(express.json())
-
+app.use(cors(corsOptions))
 app.get('/',(req:Request, res:Response, next: NextFunction)=>{
     return new SuccessResponse('Running').send(res)
 })
