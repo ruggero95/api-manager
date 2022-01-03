@@ -7,7 +7,7 @@ import { ErrorResponse, NotFoundError } from "./core/errorResponse";
 //import {DB} from './config/db'
 import {DB} from './config/db'
 import {router as mainRouter} from './app/index.controller'
-import {cors} from "cors"
+import cors from "cors"
 export const app = express()
 const corsOptions = {
     origin:true,
