@@ -1,0 +1,33 @@
+name: Deploy API MANAGER to the VM
+
+# Triggers.
+on:
+  push:
+    branches:
+      - deploy
+
+# Tasks.
+jobs:
+
+  # Run deploy.
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Use the repo data
+      - uses: actions/checkout@v2
+      # Replace secrets in K8S configs w/ secrets from GitHub
+      - name: Replace secrets in K8S configs w/ secrets from GitHub
+        run: |
+          for filename in ./k8s-deploy/*.yml; do
+              echo "Replacing secrets in $filename ..."
+              sed -i "s|{{REPLACE_HERE_API_KEY}}|${{ secrets.NEWS_MICRO_API_KEY }}|g" $filename
+              sed -i "s|{{REPLACE_HERE_ACCESS_TOKEN}}|${{ secrets.AUTH_MICRO_ACCESS_TOKEN }}|g" $filename
+              sed -i "s|{{REPLACE_HERE_MONGO_USER}}|${{ secrets.AUTH_MICRO_MONGO_USER }}|g" $filename
+              sed -i "s|{{REPLACE_HERE_MONGO_PASS}}|${{ secrets.AUTH_MICRO_MONGO_PASS }}|g" $filename
+              sed -i "s|{{REPLACE_HERE_PG_USER}}|${{ secrets.MANAGER_MICRO_PG_USER }}|g" $filename
+              sed -i "s|{{REPLACE_HERE_PG_PASS}}|${{ secrets.MANAGER_MICRO_PG_PASS }}|g" $filename
+          done
+          echo "All secrets replaced."
+
+
