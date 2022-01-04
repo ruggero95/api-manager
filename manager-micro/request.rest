@@ -1,0 +1,15 @@
+###
+POST http://localhost:4000/plans/add
+Content-Type: application/json
+
+{
+    "user_id":"61d2fde716d021cb0ac93ee2",
+    "name":"plan_2"
+}
+###
+GET http://localhost:4000/plans/key/1234
+Content-Type: application/json
+
+###
+GET http://localhost:4000/plans/user/61d2fde716d021cb0ac93ee2
+Content-Type: application/json
