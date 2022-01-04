@@ -4,6 +4,8 @@ networks:
   manager-micro-network:
     name: manager-micro-network
     driver: bridge
+  authmicro.network:
+    external: true
 
 volumes:
   manager-micro-data:
