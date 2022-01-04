@@ -33,12 +33,13 @@ jobs:
       - name: Add SSH key
         run: |
           eval $(ssh-agent -s)
-          mkdir .ssh
-          echo "${{ secrets.SSH_PUBLIC_KEY }}" > .ssh/key.pub
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > .ssh/key
-          sudo chmod 600 .ssh/key.pub
-          sudo chmod 600 .ssh/key
-          ssh-add .ssh/key
+          mkdir ~/.ssh
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/key.pub
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/key
+          sudo chmod 600 ~/.ssh/key.pub
+          sudo chmod 600 ~/.ssh/key
+          ssh-add ~/.ssh/key
+          echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
       # Exec simple command in VM
       - name: Exec simple command in VM
         run: |
