@@ -38,10 +38,8 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/key
           sudo chmod 600 ~/.ssh/key.pub
           sudo chmod 600 ~/.ssh/key
-          ssh-add ~/.ssh/key
-          echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+          echo -e "Host cloudvm\n\tHostname ${{ secrets.SSH_HOST }}\n\tPort ${{ secrets.SSH_PORT }}\n\tUser ${{ secrets.SSH_USER }}\n\tPreferredAuthentications publickey\n\tIdentityFile ~/.ssh/key\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
       # Exec simple command in VM
       - name: Exec simple command in VM
         run: |
-          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} "ls -la"
-
+          ssh cloudvm "ls -la"
