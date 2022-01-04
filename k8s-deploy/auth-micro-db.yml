@@ -13,7 +13,7 @@ metadata:
   name: mongodb-secret
 type: Opaque
 data: 
-  mongo-root-username: {{REPLACE_HERE_MONGO_PASS}}
+  mongo-root-username: {{REPLACE_HERE_MONGO_USER}}
   mongo-root-password: {{REPLACE_HERE_MONGO_PASS}}
 ---
 apiVersion: apps/v1
