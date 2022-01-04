@@ -1,0 +1,50 @@
+name: Deploy API MANAGER to the VM
+
+# Triggers.
+on:
+  push:
+    branches:
+      - master
+
+# Tasks.
+jobs:
+
+  # Run deploy.
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Use the repo data
+      - uses: actions/checkout@v2
+      # Replace secrets in K8S configs w/ secrets from GitHub
+      - name: Replace secrets in K8S configs w/ secrets from GitHub
+        run: |
+          for filename in ./k8s-deploy/*.yml; do
+              echo "Replacing secrets in $filename ..."
+              sed -i "s|{{REPLACE_HERE_API_KEY}}|${{ secrets.NEWS_MICRO_API_KEY }}|g" $filename
+              sed -i "s|{{REPLACE_HERE_ACCESS_TOKEN}}|${{ secrets.AUTH_MICRO_ACCESS_TOKEN }}|g" $filename
+              sed -i "s|{{REPLACE_HERE_MONGO_USER}}|${{ secrets.AUTH_MICRO_MONGO_USER }}|g" $filename
+              sed -i "s|{{REPLACE_HERE_MONGO_PASS}}|${{ secrets.AUTH_MICRO_MONGO_PASS }}|g" $filename
+              sed -i "s|{{REPLACE_HERE_PG_USER}}|${{ secrets.MANAGER_MICRO_PG_USER }}|g" $filename
+              sed -i "s|{{REPLACE_HERE_PG_PASS}}|${{ secrets.MANAGER_MICRO_PG_PASS }}|g" $filename
+          done
+          echo "All secrets replaced."
+      # Add key and configure SSH
+      - name: Add key and configure SSH
+        run: |
+          eval $(ssh-agent -s)
+          mkdir ~/.ssh
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/key.pub
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/key
+          sudo chmod 600 ~/.ssh/key.pub
+          sudo chmod 600 ~/.ssh/key
+          echo -e "Host cloudvm\n\tHostname ${{ secrets.SSH_HOST }}\n\tPort ${{ secrets.SSH_PORT }}\n\tUser ${{ secrets.SSH_USER }}\n\tPreferredAuthentications publickey\n\tIdentityFile ~/.ssh/key\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+      # Create K8S config folder
+      - name: Create K8S config folder
+        run: ssh cloudvm "mkdir ~/deploy-k8s || echo 'deploy-k8s folder already exists.'"
+      # Copy all K8S config files
+      - name: Copy all K8S config files
+        run: scp ./k8s-deploy/*.yml cloudvm:~/deploy-k8s/
+      # Start the K8S deployments and services
+      - name: Start the K8S deployments and services
+        run: ssh cloudvm "kubectl apply -f ~/deploy-k8s/"

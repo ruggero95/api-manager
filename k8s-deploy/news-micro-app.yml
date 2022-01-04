@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: news-micro-configmap
+data:
+  app_port: "3000"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: news-micro-secret
+type: Opaque
+data: 
+  api_key: {{REPLACE_HERE_API_KEY}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: news-micro
+  name: news-micro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: news-micro
+  template:
+    metadata:
+      labels:
+        app: news-micro
+    spec:
+      containers:
+      - image: ghcr.io/ruggero95/api-manager/news-micro:latest
+        imagePullPolicy: Always
+        name: news-micro
+        env:
+          - name: APP_PORT
+            valueFrom: 
+              configMapKeyRef:
+                name: news-micro-configmap
+                key: app_port
+          - name: CURRENTS_API_KEY
+            valueFrom: 
+              secretKeyRef:
+                name: news-micro-secret
+                key: api_key
+      dnsPolicy: "None"
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: news-micro
+  name: news-micro-service
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: news-micro
+  # type: ClusterIP se uso ingress dopo
+  type: LoadBalancer
