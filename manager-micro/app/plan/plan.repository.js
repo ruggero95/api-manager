@@ -9,7 +9,7 @@ const planRepository = {
     },
     getByUserID:(userID)=>{
         return db.query(`SELECT * FROM ${constants.TABLE_PLANS} WHERE user_id=$1`,[userID])
-    }
+    }    
 }
 
 module.exports = planRepository

@@ -10,7 +10,7 @@ router.post('/add', async (req, res, next)=>{
         if(!user_id || !name){
             return badRequestResponse(res, 'Missing params')
         }
-        const plan = await planService.create(user_id,name)
+        const plan = await planService.addPlan(user_id,name)
         if(plan){
             return successResponse(res,'Plan created')
         }
