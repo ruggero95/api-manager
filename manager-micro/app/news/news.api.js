@@ -1,4 +1,5 @@
 const axiosUtility = require('./../../config/axiosUtility')
+const axios = require('axios')
 const {NEWS_HOST, NEWS_PORT} = require('./../../config/constants')
 const newsApi = {
     getNews:(keywords, lang, country)=>{
