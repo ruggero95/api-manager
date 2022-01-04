@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 # Install app dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm install --no-dev
 # Copy app
 COPY . .
 # Build
@@ -20,5 +20,3 @@ WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 # Expose ports 
 EXPOSE 80
-# Run command 
-CMD ["nginx", "-g", "'daemon off;'"]
