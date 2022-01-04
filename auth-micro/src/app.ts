@@ -1,4 +1,4 @@
-import { myStream } from "./core/logger";
+import { logger, myStream } from "./core/logger";
 import express, { NextFunction, Request, Response } from "express"
 import morgan from "morgan"
 import helmet from "helmet";
@@ -22,7 +22,11 @@ app.use(cors(corsOptions))
 app.get('/',(req:Request, res:Response, next: NextFunction)=>{
     return new SuccessResponse('Running').send(res)
 })
-
+process.on('uncaughtException', (err) => {
+    const error = err.stack ? err.stack : (err.message ? err.message : err.toString())
+    logger.error('entro uncaught Exception')    
+    logger.error(error);
+});
 //import api here
 app.use(mainRouter)
 

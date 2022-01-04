@@ -4,6 +4,8 @@ networks:
   news-micro-network:
     name: news-micro-network
     driver: bridge
+  manager-micro-network:
+    external: true
 
 services:
   news-micro-app:
@@ -16,3 +18,4 @@ services:
       - .env
     networks:
       - news-micro-network
+      - manager-micro-network
