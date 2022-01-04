@@ -7,6 +7,15 @@ const requestRepository = {
     },
     getByRequestsByPlanID:(planID)=>{
         return db.query(`SELECT * FROM ${constants.TABLE_REQUESTS} WHERE plan_id=$1`,[planID])
+    },
+    getRequestsByIntervalDate:(startDate, endDate, plansID=null)=>{
+        let query = `SELECT * FROM ${cost.TABLE_REQUESTS} where DATE(date)>$1 AND DATE(date)<$2`
+        let values = [startDate, endDate]
+        if(plansID){
+            query += ' AND plan_id IN $3'
+            values = [...values, plansID]
+        }
+        return db.query(query, values)
     }    
 }
 
