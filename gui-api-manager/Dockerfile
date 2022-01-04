@@ -18,5 +18,6 @@ FROM nginx:alpine
 WORKDIR /usr/src/app
 # Copy app
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
 # Expose ports 
 EXPOSE 80
