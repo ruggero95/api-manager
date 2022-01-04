@@ -18,3 +18,4 @@ services:
       - .env
     networks:
       - news-micro-network
+      - manager-micro-network

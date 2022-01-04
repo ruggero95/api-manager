@@ -45,3 +45,4 @@ services:
       - .env
     networks:
       - manager-micro-network
+      - authmicro.network
