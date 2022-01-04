@@ -4,7 +4,7 @@ name: Deploy API MANAGER to the VM
 on:
   push:
     branches:
-      - deploy
+      - master
 
 # Tasks.
 jobs:
