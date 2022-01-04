@@ -41,7 +41,7 @@ jobs:
           echo -e "Host cloudvm\n\tHostname ${{ secrets.SSH_HOST }}\n\tPort ${{ secrets.SSH_PORT }}\n\tUser ${{ secrets.SSH_USER }}\n\tPreferredAuthentications publickey\n\tIdentityFile ~/.ssh/key\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
       # Create K8S config folder
       - name: Create K8S config folder
-        run: ssh cloudvm "mkdir ~/deploy-k8s"
+        run: ssh cloudvm "mkdir ~/deploy-k8s || echo 'deploy-k8s folder already exists.'"
       # Copy all K8S config files
       - name: Copy all K8S config files
         run: scp ./k8s-deploy/*.yml cloudvm:~/deploy-k8s/
