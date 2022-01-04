@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - image: ghcr.io/ruggero95/api-manager/auth-micro:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         name: auth-micro
         env:
           - name: NODE_ENV
