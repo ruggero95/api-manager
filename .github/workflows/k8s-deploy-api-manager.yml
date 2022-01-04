@@ -29,8 +29,8 @@ jobs:
               sed -i "s|{{REPLACE_HERE_PG_PASS}}|${{ secrets.MANAGER_MICRO_PG_PASS }}|g" $filename
           done
           echo "All secrets replaced."
-      # Add SSH key
-      - name: Add SSH key
+      # Add key and configure SSH
+      - name: Add key and configure SSH
         run: |
           eval $(ssh-agent -s)
           mkdir ~/.ssh
@@ -39,7 +39,9 @@ jobs:
           sudo chmod 600 ~/.ssh/key.pub
           sudo chmod 600 ~/.ssh/key
           echo -e "Host cloudvm\n\tHostname ${{ secrets.SSH_HOST }}\n\tPort ${{ secrets.SSH_PORT }}\n\tUser ${{ secrets.SSH_USER }}\n\tPreferredAuthentications publickey\n\tIdentityFile ~/.ssh/key\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-      # Exec simple command in VM
-      - name: Exec simple command in VM
-        run: |
-          ssh cloudvm "ls -la"
+      # Create K8S config folder
+      - name: Create K8S config folder
+        run: ssh cloudvm "mkdir ~/deploy-k8s"
+      # Copy all K8S config files
+      - name: Copy all K8S config files
+        run: scp ./k8s-deploy/*.yml cloudvm:~/deploy-k8s/
