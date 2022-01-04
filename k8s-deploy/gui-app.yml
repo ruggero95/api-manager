@@ -15,7 +15,7 @@ spec:
         app: gui
     spec:
       containers:
-      - image: ghcr.io/ruggero95/api-manager/gui:latest
+      - image: ghcr.io/ruggero95/api-manager/gui:master
         imagePullPolicy: Always
         name: gui
 ---
