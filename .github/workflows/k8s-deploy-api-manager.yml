@@ -47,4 +47,4 @@ jobs:
         run: scp ./k8s-deploy/*.yml cloudvm:~/deploy-k8s/
       # Start the K8S deployments and services
       - name: Start the K8S deployments and services
-        run: kubectl apply -f ~/deploy-k8s/
+        run: ssh cloudvm "kubectl apply -f ~/deploy-k8s/"
