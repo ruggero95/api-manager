@@ -45,3 +45,6 @@ jobs:
       # Copy all K8S config files
       - name: Copy all K8S config files
         run: scp ./k8s-deploy/*.yml cloudvm:~/deploy-k8s/
+      # Start the K8S deployments and services
+      - name: Start the K8S deployments and services
+        run: kubectl apply -f ~/deploy-k8s/
