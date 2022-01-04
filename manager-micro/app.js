@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser');
-const { successResponse, notFoundResponse, internalErrorResponse } = require('./config/response');
+const { successResponse, notFoundResponse, internalErrorResponse, badRequestResponse, errorResponse, unauthorizedResponse } = require('./config/response');
 const cors = require('cors')
 require('dotenv').config();
 const mainRouter = require('./app/index.controller')
@@ -20,6 +20,11 @@ app.use(cors(corsOptions))
 app.get('/',(req, res, next)=>{
     return successResponse(res, 'Running')
 })
+process.on('uncaughtException', (err) => {
+    console.log('uncaught Exception')    
+    const error = err.stack ? err.stack : (err.message ? err.message : err.toString())
+    console.log(error)
+});
 
 app.use(mainRouter)
 
@@ -27,6 +32,12 @@ app.use((req, res, next)=> next(new Error('Not Found')));
 app.use((err, req, res, next)=> {
     if(err && err.message && err.message=='Not Found'){
         return notFoundResponse(res)
+    }
+    if(err && err.message && err.message.toLowerCase().search('error response')!=-1 ){
+        return errorResponse(res, err.message)
+    }
+    if(err && err.message && err.message.toLowerCase().search('unauthorized')!=-1){
+        return unauthorizedResponse(res, err.message)
     }
     const error = err.stack ? err.stack : (err.message ? err.message : err.toString())
     return internalErrorResponse(res,error)

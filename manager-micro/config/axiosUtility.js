@@ -6,7 +6,7 @@ const axiosUtility = {
         return {
             headers: {
                 'Content-Type': 'application/json',
-                ...utils.getTokenHeader(token)
+                ...axiosUtility.getTokenHeader(token)
             }
         }
     },
@@ -18,7 +18,7 @@ const axiosUtility = {
         return response.data ? response.data : null
     },
     hanldeAxiosResponse: (response, customHandler) => {
-        const payload = utils.getResponsePayload(response)
+        const payload = axiosUtility.getResponsePayload(response)
         if (!payload) {
             console.log('axios error, missing payload')
             return
