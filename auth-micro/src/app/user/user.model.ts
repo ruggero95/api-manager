@@ -63,11 +63,11 @@ UserSchema.methods.comparePassword = async function(candidatePassword) {
     return false
 };
 
-UserSchema.pre('save', function (next) {
+UserSchema.pre('save', function<Iuser>(next):void {
     if (!this.isModified('password')) {
         return next()
     }
-    this.password = sha256(this.password) 
+    this.password = sha256(this.password).toString() 
     next()  
 })
 
