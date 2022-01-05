@@ -3,5 +3,6 @@ export const store = {
     state:reactive({
         user:null,
         plans:[],
+        requests:[]
     })
 }

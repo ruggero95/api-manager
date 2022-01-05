@@ -1,10 +1,15 @@
-import {store} from "@/app/mystore"
+import { store } from "@/app/mystore"
 import { managerApi } from "./manager.api"
 export const managerService = {
-    retrievePlans: async ()=>{
-        const plans = await managerApi.getPlansByUserID(store.state.user.id)
+    retrievePlans: async () => {
+        const plans = await managerApi.getPlansByUserID()
         store.state.plans = plans
-        console.log(store)
+        return
+    }, 
+    retrieveRequests: async () => {
+        const requests = await managerApi.getRequests()
+        store.state.requests = requests
         return
     }
+
 }
