@@ -5,8 +5,13 @@ const cors = require('cors')
 require('dotenv').config();
 const mainRouter = require('./app/index.controller')
 const app = express()
-const dbInit = require('./config/dbInit')
-dbInit.init()
+
+//const dbInit = require('./config/dbInit')
+const db = require('./config/db')
+//dbInit.init()
+db.connection()
+db.tables()
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 const corsOptions = {
