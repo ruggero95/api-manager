@@ -56,7 +56,7 @@ UserSchema.methods.verifyAccessToken = function (accessToken) {
 }
 
 UserSchema.methods.comparePassword = async function(candidatePassword) {
-    if(sha256(candidatePassword)===this.password){
+    if(sha256(candidatePassword).toString()===this.password){
         return true
     }
    
