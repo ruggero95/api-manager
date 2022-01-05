@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card height="100%">
     <v-card-title class="align-start">
       <span class="font-weight-semibold">Statistics Card</span>
       <v-spacer></v-spacer>
@@ -9,7 +9,7 @@
         class="me-n3 mt-n2"
       >
         <v-icon>
-          {{ icons.mdiDotsVertical }}
+          {{ this.mdiDotsVertical }}
         </v-icon>
       </v-btn>
     </v-card-title>
@@ -21,15 +21,13 @@
     <v-card-text>
       <v-row>
         <v-col
-          v-for="data in statisticsData"
-          :key="data.title"
           cols="6"
           md="3"
           class="d-flex align-center"
         >
           <v-avatar
             size="44"
-            :color="resolveStatisticsIconVariation (data.title).color"
+            color="warning"
             rounded
             class="elevation-1"
           >
@@ -38,15 +36,43 @@
               color="white"
               size="30"
             >
-              {{ resolveStatisticsIconVariation (data.title).icon }}
+              {{this.mdiLabelOutline}}
             </v-icon>
           </v-avatar>
           <div class="ms-3">
             <p class="text-xs mb-0">
-              {{ data.title }}
+              Plans
             </p>
             <h3 class="text-xl font-weight-semibold">
-              {{ data.total }}
+              {{ this.localStore.state.plans.length }}
+            </h3>
+          </div>
+        </v-col>
+         <v-col
+          cols="6"
+          md="3"
+          class="d-flex align-center"
+        >
+          <v-avatar
+            size="44"
+            color="warning"
+            rounded
+            class="elevation-1"
+          >
+            <v-icon
+              dark
+              color="white"
+              size="30"
+            >
+              {{this.mdiLabelOutline}}
+            </v-icon>
+          </v-avatar>
+          <div class="ms-3">
+            <p class="text-xs mb-0">
+              Requests
+            </p>
+            <h3 class="text-xl font-weight-semibold">
+              {{ this.localStore.state.requests.length }}
             </h3>
           </div>
         </v-col>
@@ -58,50 +84,17 @@
 <script>
 // eslint-disable-next-line object-curly-newline
 import { mdiAccountOutline, mdiCurrencyUsd, mdiTrendingUp, mdiDotsVertical, mdiLabelOutline } from '@mdi/js'
-
+import {store} from "@/app/mystore"
 export default {
-  setup() {
-    const statisticsData = [
-      {
-        title: 'Sales',
-        total: '245k',
-      },
-      {
-        title: 'Customers',
-        total: '12.5k',
-      },
-      {
-        title: 'Product',
-        total: '1.54k',
-      },
-      {
-        title: 'Revenue',
-        total: '$88k',
-      },
-    ]
-
-    const resolveStatisticsIconVariation = data => {
-      if (data === 'Sales') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Customers') return { icon: mdiAccountOutline, color: 'success' }
-      if (data === 'Product') return { icon: mdiLabelOutline, color: 'warning' }
-      if (data === 'Revenue') return { icon: mdiCurrencyUsd, color: 'info' }
-
-      return { icon: mdiAccountOutline, color: 'success' }
-    }
-
+  data(){
     return {
-      statisticsData,
-      resolveStatisticsIconVariation,
-
-      // icons
-      icons: {
-        mdiDotsVertical,
-        mdiTrendingUp,
-        mdiAccountOutline,
-        mdiLabelOutline,
-        mdiCurrencyUsd,
-      },
+      localStore: store,
+      mdiLabelOutline:mdiLabelOutline,
+      mdiDotsVertical:mdiDotsVertical
     }
+  },
+  setup() {
+    
   },
 }
 </script>

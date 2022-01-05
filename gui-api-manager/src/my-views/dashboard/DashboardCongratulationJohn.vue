@@ -11,7 +11,7 @@
         <v-card-text class="d-flex align-center mt-2 pb-2 ps-2">
           <div>
             <p class="text-xl font-weight-semibold primary--text mb-2">
-              {{this.requests}} requests
+              {{this.localStore.state.requests.length}} requests
             </p>
 
             <v-btn
@@ -48,7 +48,6 @@ import { store } from '@/app/mystore'
 export default {
   data(){
     return {
-      requests:0,
       localStore: store
     }
   },

@@ -15,95 +15,9 @@
 
     <v-col
       cols="12"
-      sm="6"
-      md="4"
+      
     >
       <dashboard-weekly-overview></dashboard-weekly-overview>
-    </v-col>
-
-    <v-col
-      cols="12"
-      md="4"
-      sm="6"
-    >
-      <dashboard-card-total-earning></dashboard-card-total-earning>
-    </v-col>
-
-    <v-col
-      cols="12"
-      md="4"
-    >
-      <v-row class="match-height">
-        <v-col
-          cols="12"
-          sm="6"
-        >
-          <statistics-card-vertical
-            :change="totalProfit.change"
-            :color="totalProfit.color"
-            :icon="totalProfit.icon"
-            :statistics="totalProfit.statistics"
-            :stat-title="totalProfit.statTitle"
-            :subtitle="totalProfit.subtitle"
-          ></statistics-card-vertical>
-        </v-col>
-        <v-col
-          cols="12"
-          sm="6"
-        >
-          <statistics-card-vertical
-            :change="totalSales.change"
-            :color="totalSales.color"
-            :icon="totalSales.icon"
-            :statistics="totalSales.statistics"
-            :stat-title="totalSales.statTitle"
-            :subtitle="totalSales.subtitle"
-          ></statistics-card-vertical>
-        </v-col>
-        <v-col
-          cols="12"
-          sm="6"
-        >
-          <statistics-card-vertical
-            :change="newProject.change"
-            :color="newProject.color"
-            :icon="newProject.icon"
-            :statistics="newProject.statistics"
-            :stat-title="newProject.statTitle"
-            :subtitle="newProject.subtitle"
-          ></statistics-card-vertical>
-        </v-col>
-
-        <v-col
-          cols="12"
-          sm="6"
-        >
-          <statistics-card-vertical
-            :change="salesQueries.change"
-            :color="salesQueries.color"
-            :icon="salesQueries.icon"
-            :statistics="salesQueries.statistics"
-            :stat-title="salesQueries.statTitle"
-            :subtitle="salesQueries.subtitle"
-          ></statistics-card-vertical>
-        </v-col>
-      </v-row>
-    </v-col>
-
-    <v-col
-      cols="12"
-      md="4"
-    >
-      <dashboard-card-sales-by-countries></dashboard-card-sales-by-countries>
-    </v-col>
-    <v-col
-      cols="12"
-      md="8"
-    >
-      <dashboard-card-deposit-and-withdraw></dashboard-card-deposit-and-withdraw>
-    </v-col>
-    <v-col cols="12">
-      <dashboard-datatable></dashboard-datatable>
     </v-col>
   </v-row>
 </template>
@@ -125,6 +39,7 @@ import {managerService} from "@/app/manager/manager.service"
 export default {
   async mounted(){
     await managerService.retrievePlans()
+    await managerService.retrieveRequests()
   },
   components: {
     StatisticsCardVertical,

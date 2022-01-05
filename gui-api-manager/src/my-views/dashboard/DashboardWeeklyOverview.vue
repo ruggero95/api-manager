@@ -24,21 +24,7 @@
         height="210"
       ></vue-apex-charts>
 
-      <div class="d-flex align-center">
-        <h3 class="text-2xl font-weight-semibold me-4">
-          45%
-        </h3>
-        <span>Your sales perfomance in 45% 🤩 better compare to last month</span>
-      </div>
-
-      <v-btn
-        block
-        color="primary"
-        class="mt-6"
-        outlined
-      >
-        Details
-      </v-btn>
+     
     </v-card-text>
   </v-card>
 </template>
