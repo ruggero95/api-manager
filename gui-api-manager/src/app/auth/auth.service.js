@@ -10,6 +10,7 @@ export const authService = {
             const checkUser = await authApi.checkUser()
             store.state.user = checkUser.data.payload
             if (checkUser.error == "true") {
+                localStorage.removeItem('token')
                 return false
             }
             return true
