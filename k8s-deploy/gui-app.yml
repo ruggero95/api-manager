@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gui
+  name: gui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gui
+  template:
+    metadata:
+      labels:
+        app: gui
+    spec:
+      containers:
+      - image: ghcr.io/ruggero95/api-manager/gui:master
+        imagePullPolicy: Always
+        name: gui
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: gui
+  name: gui-service
+spec:
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: gui
+  # type: ClusterIP se uso ingress dopo
+  type: LoadBalancer
