@@ -1,21 +1,30 @@
-const db = require('./../../config/db')
+const {connection} = require('./../../config/db')
 const constants = require('./../../config/constants')
 const dayjs = require('dayjs')
 const requestRepository = {
     create:(planID)=>{
-        return db.query(`INSERT INTO ${constants.TABLE_REQUESTS}(plan_id,date) VALUES ($1,$2)`,[planID,dayjs().format('YYYY-MM-DD HH:mm:ss')])
+        return connection().query(`INSERT INTO ${constants.TABLE_REQUESTS}(plan_id,date) VALUES ($1,$2)`,[planID,dayjs().format('YYYY-MM-DD HH:mm:ss')])
     },
     getByRequestsByPlanID:(planID)=>{
-        return db.query(`SELECT * FROM ${constants.TABLE_REQUESTS} WHERE plan_id=$1`,[planID])
+        return connection().query(`SELECT * FROM ${constants.TABLE_REQUESTS} WHERE plan_id=$1`,[planID])
     },
-    getRequestsByIntervalDate:(startDate, endDate, plansID=null)=>{
-        let query = `SELECT * FROM ${cost.TABLE_REQUESTS} where DATE(date)>$1 AND DATE(date)<$2`
+    getByUserId:(userID)=>{
+        return connection().query(`SELECT * FROM ${constants.TABLE_REQUESTS} AS R LEFT JOIN ${constants.TABLE_PLANS} AS P ON R.plan_id=P.id WHERE P.user_id=$1`,[userID])
+    },
+    getRequestsByIntervalDate:(startDate, endDate, plans=null)=>{
+        let query = `SELECT * FROM ${constants.TABLE_REQUESTS} where DATE(date)>$1 AND DATE(date)<$2`
         let values = [startDate, endDate]
-        if(plansID){
-            query += ' AND plan_id IN $3'
-            values = [...values, plansID]
-        }
-        return db.query(query, values)
+        if(plans){
+            let plans_id = []
+            for(let i=0;i<plans.legth;i++){
+                plans_id = [...plans_id,plans[i].id]
+            }
+            values = [...values, ...plans_id]
+
+            query += ` AND plan_id IN (${plans_id.join(',')})`
+
+        }         
+        return connection().query(query, values)
     }    
 }
 
