@@ -10,7 +10,10 @@ const authMiddleware = {
             return unauthorizedResponse(res)
         }
         const checkToken = await authApi.checkToken(token)
-        if(checkToken.error == 'true'){
+        console.log(checkToken)
+        console.log(checkToken.data.payload.id)
+        req.body.user_id = checkToken.data.payload.id
+        if(!checkToken || checkToken.error == 'true'){
             return unauthorizedResponse(res)
         }
         next()

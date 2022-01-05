@@ -1,10 +1,9 @@
 ###
 POST http://localhost:4000/plans/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDRhZmJjOTgxZjUxNDRlODZjMTRjNCIsInVzZXJuYW1lIjoidGVzdCIsImlhdCI6MTY0MTMyODU3MiwiZXhwIjoxNjQxNTAxMzcyfQ.sMhh_uEhvDAPzWvGxmgoxzhTjr7xazc3julSHzkJnfU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDU2MDZjYjRjMTJkZGYwN2YwZjcxNCIsInVzZXJuYW1lIjoidGVzdCIsImlhdCI6MTY0MTM3NjI4MSwiZXhwIjoxNjQxNTQ5MDgxfQ.zU8pwGHoskg10wQB28-iEuhlIoWtlbrK_-kT3gtmn9g
 
 {
-    "user_id":"61d2fde716d021cb0ac93ee2",
     "name":"plan_2"
 }
 ###
@@ -13,11 +12,16 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDRhZmJjOTgxZjUxNDRlODZjMTRjNCIsInVzZXJuYW1lIjoidGVzdCIsImlhdCI6MTY0MTMyODU3MiwiZXhwIjoxNjQxNTAxMzcyfQ.sMhh_uEhvDAPzWvGxmgoxzhTjr7xazc3julSHzkJnfU
 
 ###
-GET http://localhost:4000/plans/user/61d2fde716d021cb0ac93ee2
+GET http://localhost:4000/plans/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDRhZmJjOTgxZjUxNDRlODZjMTRjNCIsInVzZXJuYW1lIjoidGVzdCIsImlhdCI6MTY0MTMyODU3MiwiZXhwIjoxNjQxNTAxMzcyfQ.sMhh_uEhvDAPzWvGxmgoxzhTjr7xazc3julSHzkJnfU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDU2MDZjYjRjMTJkZGYwN2YwZjcxNCIsInVzZXJuYW1lIjoidGVzdCIsImlhdCI6MTY0MTM3NjI4MSwiZXhwIjoxNjQxNTQ5MDgxfQ.zU8pwGHoskg10wQB28-iEuhlIoWtlbrK_-kT3gtmn9g
 
 ###
 GET http://localhost:4000/news?q='car'
 Content-Type: application/json
 Authorization: Bearer plan.DL7rD1c7tX5egoP14C0.a
+
+###
+GET http://localhost:4000
+Content-Type: application/json
+
