@@ -5,9 +5,8 @@ export const authApi = {
     login(username, password){
         return axios.post(`${env.auth_backend}/auth/login`,{username:username,password:password}).then((response)=>{
             return utils.hanldeAxiosResponse(response, (payload)=>{
-                console.log(payload)
                 localStorage.setItem('token',payload.data.token)
-                return payload.token
+                return payload.data.token
             })
         }).catch(utils.handleAxiosError)
     },

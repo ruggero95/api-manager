@@ -56,18 +56,18 @@ UserSchema.methods.verifyAccessToken = function (accessToken) {
 }
 
 UserSchema.methods.comparePassword = async function(candidatePassword) {
-    if(sha256(candidatePassword)===this.password){
+    if(sha256(candidatePassword).toString()===this.password){
         return true
     }
    
     return false
 };
 
-UserSchema.pre('save', function (next) {
+UserSchema.pre('save', function<Iuser>(next):void {
     if (!this.isModified('password')) {
         return next()
     }
-    this.password = sha256(this.password) 
+    this.password = sha256(this.password).toString() 
     next()  
 })
 

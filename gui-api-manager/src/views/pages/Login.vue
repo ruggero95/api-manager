@@ -141,7 +141,6 @@ export default {
       }catch(e){
         this.loginMessage = 'Error'
         this.typeLogin="error"
-        alert('error')
       }
     }
   },

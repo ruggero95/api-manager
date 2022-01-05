@@ -45,7 +45,7 @@
           style="vertical-align:middle"
         >
           <span class="text--primary font-weight-semibold mb-n1">
-            John Doe
+            {{this.localStore.state.user.username}}
           </span>
           <small class="text--disabled text-capitalize">Admin</small>
         </div>
@@ -53,54 +53,13 @@
 
       <v-divider></v-divider>
 
-      <!-- Profile -->
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon size="22">
-            {{ icons.mdiAccountOutline }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Profile</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      
 
-      <!-- Email -->
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon size="22">
-            {{ icons.mdiEmailOutline }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Inbox</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+    
+   
 
-      <!-- Chat -->
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon size="22">
-            {{ icons.mdiChatOutline }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Chat</v-list-item-title>
-        </v-list-item-content>
-
-        <v-list-item-action>
-          <v-badge
-            inline
-            color="error"
-            content="2"
-          >
-          </v-badge>
-        </v-list-item-action>
-      </v-list-item>
-
-      <v-divider class="my-2"></v-divider>
-
-      <!-- Settings -->
+      
+      <!-- Settings 
       <v-list-item link>
         <v-list-item-icon class="me-2">
           <v-icon size="22">
@@ -110,19 +69,9 @@
         <v-list-item-content>
           <v-list-item-title>Settings</v-list-item-title>
         </v-list-item-content>
-      </v-list-item>
+      </v-list-item>-->
 
-      <!-- Pricing -->
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon size="22">
-            {{ icons.mdiCurrencyUsd }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Pricing</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+     
 
       <!-- FAQ -->
       <v-list-item link>
@@ -136,7 +85,6 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-divider class="my-2"></v-divider>
 
       <!-- Logout -->
       <v-list-item link>
@@ -166,8 +114,13 @@ import {
 } from '@mdi/js'
 import { authService } from '@/app/auth/auth.service'
 import router from '@/router'
-
+import {store} from '@/app/mystore'
 export default {
+  data(){
+    return {
+      localStore:store
+    }
+  },
   methods:{
     async logout(){
       const logout = await authService.logout()

@@ -1,3 +1,4 @@
+const { request } = require('express')
 const newsApi = require('../news/news.api')
 const planRepository = require('./../plan/plan.repository')
 const requestRepository = require('./request.repository')
@@ -19,6 +20,18 @@ const requestService = {
             throw('Error retriving news')
         }
         return news.data ? news.data : null
+    },
+    getByDate: async (user_id, start_date, end_date)=>{
+        const plans = await planRepository.getByUserID(user_id)
+        if(!plans || !plans.rows){
+            throw('error response: missing plan')
+        }
+       
+        const requests = await requestRepository.getRequestsByIntervalDate(start_date,end_date, plans.rows)
+        if(!request || !requests.rows){
+            throw('Error retriving requests')
+        }
+        return requests.rows
     }
 }
 

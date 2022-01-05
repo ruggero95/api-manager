@@ -12,6 +12,10 @@ const axiosUtility = {
     },
     handleAxiosError: (error) => {
         console.log('axios error')
+        if(error && error.response && error.response.data && error.response.data.message){
+            console.log(error.response.data.message)
+            throw(new Error(' unhautorized '+error.response.data.message))
+        }
         console.log(error)
     },
     getResponsePayload: (response) => {

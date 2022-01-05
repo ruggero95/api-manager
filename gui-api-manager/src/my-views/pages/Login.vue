@@ -143,9 +143,9 @@ export default {
         }
       }catch(e){
         this.showMessage = true
+        
         this.loginMessage = e.message
         this.typeLogin="error"
-        alert('error')
 
       }
     }

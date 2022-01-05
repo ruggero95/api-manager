@@ -1,19 +1,37 @@
 const express = require('express');
-const { successResponse, errorResponse } = require('../../config/response');
-const requestMiddleware = require('./request.middleware');
+const { successResponse, errorResponse, badRequestResponse } = require('../../config/response');
 const router = express.Router()
-const requestService = require('./request.service')
+const requestService = require('./../requests/request.service');
+const requestRepository = require('./request.repository');
 
-router.get('/news', requestMiddleware.checkApikey, async (req, res, next)=>{
-    try{
-        const keywords =  req.query.q || '';
-        const lang = req.query.lang || 'en'; // default: en
-        const country = req.query.country || 'US'; // default: US
-        const api_key = req.query.api_key || ''; // default: US
+router.get('/requests', async (req, res, next)=>{
+    //api
+    try{      
+        const user_id = req.body.user_id //injected by middleware
+        if(!user_id){
+            return badRequestResponse(res,'Missing user id')
+        }
+        const requests = await requestRepository.getByUserId(user_id)
+        if(requests && requests.rows ){
+            return successResponse(res,'User requests',requests.rows)
+        }
+        return errorResponse(res, 'Error retriving news')
+    }catch(e){
+        next(e)
+    }
+})
 
-        const news = await requestService.processRequest(api_key, keywords,lang,country)
-        if(news){
-            return successResponse(res,'News',news)
+router.get('/requests/bydate', async (req, res, next)=>{
+    try{      
+        const user_id = req.body.user_id //injected by middleware
+        const start_date = req.query.start_date //injected by middleware
+        const end_date = req.query.end_date //injected by middleware
+        if(!user_id){
+            return badRequestResponse(res,'Missing user id')
+        }
+        const requests = await requestService.getByDate(user_id, start_date, end_date)
+        if(requests){
+            return successResponse(res,'User requests',requests)
         }
         return errorResponse(res, 'Error retriving news')
     }catch(e){

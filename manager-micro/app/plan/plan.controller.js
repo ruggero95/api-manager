@@ -38,9 +38,9 @@ router.get('/key/:api_key', async (req, res, next)=>{
     }
 })
 
-router.get('/user/:user_id', async (req, res, next)=>{
+router.get('/user', async (req, res, next)=>{
     try{
-        const user_id = req.params.user_id
+        const user_id = req.body.user_id  //iniettato da middlewhare
         if(!user_id){
             return badRequestResponse(res,'Missing user id')
         }

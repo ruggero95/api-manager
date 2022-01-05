@@ -6,7 +6,6 @@ import { AuthMiddleware } from "./auth.middleware"
 
 router.post('/login', async (req:Request, res:Response, next:NextFunction)=>{
     try{
-        console.log(req.originalUrl)
         const username = req.body.username
         const password = req.body.password    
         if(!username || !password){
