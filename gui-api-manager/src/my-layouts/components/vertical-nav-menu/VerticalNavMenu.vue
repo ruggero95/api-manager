@@ -43,11 +43,23 @@
         :icon="icons.mdiHomeOutline"
       ></nav-menu-link>
       <nav-menu-link
-        title="Account Settings"
+        title="Add Plan"
         :to="{ name: 'pages-account-settings'}"
         :icon="icons.mdiAccountCogOutline"
       ></nav-menu-link>
-     
+       <nav-menu-group
+        title="Plans"
+        :icon="icons.mdiFileOutline"
+      >
+       
+      <nav-menu-link 
+          v-for="plan in this.localStore.state.plans"
+          :key="plan.id"
+          :title="plan.name"
+          :to="'/plans/'+plan.id"        
+        ></nav-menu-link>
+       
+      </nav-menu-group>
     
     </v-list>
     
@@ -69,9 +81,15 @@ import {
 import NavMenuSectionTitle from './components/NavMenuSectionTitle.vue'
 import NavMenuGroup from './components/NavMenuGroup.vue'
 import NavMenuLink from './components/NavMenuLink.vue'
-
+import {store} from "@/app/mystore"
 export default {
-  components: {
+  data(){
+    return {
+      localStore: store
+
+    }
+  },
+  components: {    
     NavMenuSectionTitle,
     NavMenuGroup,
     NavMenuLink,

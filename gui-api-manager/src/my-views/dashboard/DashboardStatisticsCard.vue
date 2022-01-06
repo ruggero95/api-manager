@@ -55,7 +55,7 @@
         >
           <v-avatar
             size="44"
-            color="warning"
+            color="info"
             rounded
             class="elevation-1"
           >
@@ -85,6 +85,7 @@
 // eslint-disable-next-line object-curly-newline
 import { mdiAccountOutline, mdiCurrencyUsd, mdiTrendingUp, mdiDotsVertical, mdiLabelOutline } from '@mdi/js'
 import {store} from "@/app/mystore"
+console.log(store.state.plans)
 export default {
   data(){
     return {

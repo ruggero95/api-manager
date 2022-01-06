@@ -2,21 +2,24 @@
   <v-card class="greeting-card">
     <v-row class="ma-0 pa-0">
       <v-col cols="8">
-        <v-card-title class="text-no-wrap pt-1 ps-2">
-          Congratulations {{username}}! 🥳
+        <v-card-title v-if="todayRequests>0" class="text-no-wrap pt-1 ps-2">
+          Congratulations {{username}}! 🥳 
         </v-card-title>
-        <v-card-subtitle class="text-no-wrap ps-2">
+        <v-card-title v-if="todayRequests==0" class="text-no-wrap pt-1 ps-2">
+          Welcome {{username}}!
+        </v-card-title>
+        <v-card-subtitle v-if="todayRequests>0" class="text-no-wrap ps-2">
           You have won Trophy
         </v-card-subtitle>
         <v-card-text class="d-flex align-center mt-2 pb-2 ps-2">
           <div>
             <p class="text-xl font-weight-semibold primary--text mb-2">
-              {{this.localStore.state.requests.length}} requests
+              {{todayRequests}} requests today
             </p>
 
             <v-btn
               small
-              color="primary"
+              color="primary" @click="localStore.state.requests=[]"
             >
               Try api
             </v-btn>
@@ -24,7 +27,7 @@
         </v-card-text>
       </v-col>
 
-      <v-col cols="4">
+      <v-col v-if="todayRequests>0" cols="4">
         <v-img
           contain
           height="180"
@@ -48,13 +51,29 @@ import { store } from '@/app/mystore'
 export default {
   data(){
     return {
-      localStore: store
+      localStore: store,
     }
+  },
+  methods:{
+   
   },
   computed:{
     username(){
       return this.localStore.state.user.username
     },
+    todayRequests(){
+      let count = 0
+      const today = new Date()
+      this.localStore.state.requests.map((req)=>{
+        const date = new Date(req.date)
+        
+        if(today.getDay()==date.getDay() && today.getMonth()==date.getMonth() && today.getFullYear()==today.getFullYear()){
+          count++
+        }
+        
+      })
+      return count
+    }
   },
   setup() {
     
