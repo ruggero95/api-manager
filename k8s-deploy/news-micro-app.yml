@@ -63,5 +63,5 @@ spec:
     targetPort: 3000
   selector:
     app: news-micro
-  # type: ClusterIP se uso ingress dopo
-  type: LoadBalancer
+  type: ClusterIP
+  

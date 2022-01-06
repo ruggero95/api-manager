@@ -1,0 +1,45 @@
+#kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.0/deploy/static/provider/cloud/deploy.yaml
+#minikube addons enable ingress
+
+#apiVersion: extensions/v1
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-manager-ingress
+  labels:
+    app: api-manager
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /auth-micro(/|$)(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: auth-micro-service
+              port: 
+                number: 4003
+        - path: /manager-micro(/|$)(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: manager-micro-service
+              port: 
+                number: 4000
+        - path: /gui(/|$)(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: gui-service
+              port:
+                number: 8000
+        - path: /news(/|$)(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: news-micro-service
+              port:
+                number: 3000

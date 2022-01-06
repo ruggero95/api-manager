@@ -32,5 +32,4 @@ spec:
     targetPort: 80
   selector:
     app: gui
-  # type: ClusterIP se uso ingress dopo
-  type: LoadBalancer
+  type: ClusterIP
