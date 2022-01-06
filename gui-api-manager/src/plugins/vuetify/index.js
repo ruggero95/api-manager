@@ -14,5 +14,15 @@ export default new Vuetify({
       customProperties: true,
       variations: false,
     },
+    themes: {
+      dark: {
+        bg: '#3b3559'
+
+      },
+      light: {
+        bg: '#f6f6f6'
+
+      }
+    }
   },
 })
