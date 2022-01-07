@@ -25,6 +25,9 @@ const requestRepository = {
 
         }         
         return connection().query(query, values)
+    },
+    deleteByPlanId:(planID)=>{
+        return connection().query(`DELETE FROM ${constants.TABLE_REQUESTS} WHERE plan_id=$1`,[planID])
     }    
 }
 
