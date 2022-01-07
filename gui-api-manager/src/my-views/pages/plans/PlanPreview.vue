@@ -5,7 +5,7 @@
             <v-container>
                 <v-row>
                     <v-col v-for="prev in 9" :key="prev" cols="4">
-                        <PlanPreviewCard    :title="preview.response[prev].title" :image="preview.response[prev].image" :url="preview.response[prev].url"  :description="preview.response[prev].description" :author="preview.response[prev].author" :date="preview.response[prev].published"></PlanPreviewCard>
+                        <PlanPreviewCard    :title="preview.response[prev].title" :image="preview.response[prev].image" :category="preview.response[prev].category" :url="preview.response[prev].url"  :description="preview.response[prev].description" :author="preview.response[prev].author" :date="preview.response[prev].published"></PlanPreviewCard>
                     </v-col>
                 </v-row>
             </v-container>
@@ -30,11 +30,8 @@ export default {
         PlanPreviewCard
     },
     computed:{
-        hasPreview(){
-            console.log('has prev')
-            console.log(store.state.preview)
+        hasPreview(){           
             const preview = store.state.preview.filter((e)=>e.plan_id==this.$route.params.id)
-            console.log(preview)
             if(preview && preview.length>0){    
                 this.preview = preview[0]            
                 return true
@@ -43,7 +40,6 @@ export default {
         }
     },
     mounted(){
-        console.log('mount')
     },
     setup() {
         

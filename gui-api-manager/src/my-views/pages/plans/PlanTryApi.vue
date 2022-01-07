@@ -12,7 +12,7 @@
             <v-card-text class="flex-nowrap">
                 <v-form>
                     <v-text-field v-model="query" label="Query News" dense outlined></v-text-field>
-                    <v-btn color="primary" class="me-3 mb-4" @click="searchApi">Search</v-btn>
+                    <v-btn color="primary" :loading="this.loading" class="me-3 mb-4" @click="searchApi">Search</v-btn>
                 </v-form>
             </v-card-text>
 
@@ -45,28 +45,33 @@ export default {
         return {
             localStore: store,
             query: '',
-            response:''
+            response:'',
+            loading:false
         }
     },
-    methods: {
-        async searchApi() {
-            if (this.query != '') {
-                const plan = this.localStore.state.plans.filter((e) => e.id == this.$route.params.id)
-                if (plan[0]) {
-                    await newsService.getNews(this.query, plan[0])
-                    await managerService.retrieveRequests()
-                    this.setResponse()
-                    console.log(store.state.preview)
-                }
-
-            }
-        },
+    computed:{
         setResponse() {
             const preview = this.localStore.state.preview.filter((e)=>e.plan_id==this.$route.params.id)
             if(preview && preview[0]){
                 this.response = preview[0].response
             }
         }
+    },
+    methods: {
+        async searchApi() {
+            this.loading = true
+            if (this.query != '') {
+                const plan = this.localStore.state.plans.filter((e) => e.id == this.$route.params.id)
+                if (plan[0]) {
+                    await newsService.getNews(this.query, plan[0])
+                    await managerService.retrieveRequests()
+                    this.setResponse
+                }
+
+            }
+            this.loading = false
+        },
+        
     },
     setup() {
 

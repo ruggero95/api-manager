@@ -23,6 +23,11 @@ const routes = [
     component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
   },
   {
+    path: '/handle-plan',
+    name: 'handle-plan',
+    component: () => import('@/my-views/pages/plans/AddPlan.vue'),
+  },
+  {
     path: '/plans/:id',
     name: 'pages-plans',
     meta:{
