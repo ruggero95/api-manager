@@ -37,7 +37,6 @@ export default {
 
     const resolveLayout = computed(() => {
       // Handles initial route
-      console.log(route.value)
       //console.log(store.state.user)
       if (route.value.name === null) return null
 

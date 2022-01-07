@@ -45,7 +45,7 @@
           style="vertical-align:middle"
         >
           <span class="text--primary font-weight-semibold mb-n1">
-            {{this.localStore.state.user.username}}
+            {{this.localStore.state.user ? this.localStore.state.user.username : ''}}
           </span>
           <small class="text--disabled text-capitalize">Admin</small>
         </div>

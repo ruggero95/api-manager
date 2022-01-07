@@ -59,7 +59,7 @@ export default {
   },
   computed:{
     username(){
-      return this.localStore.state.user.username
+      return this.localStore.state.user ? this.localStore.state.user.username : ''
     },
     todayRequests(){
       let count = 0

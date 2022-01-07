@@ -85,7 +85,6 @@
 // eslint-disable-next-line object-curly-newline
 import { mdiAccountOutline, mdiCurrencyUsd, mdiTrendingUp, mdiDotsVertical, mdiLabelOutline } from '@mdi/js'
 import {store} from "@/app/mystore"
-console.log(store.state.plans)
 export default {
   data(){
     return {
