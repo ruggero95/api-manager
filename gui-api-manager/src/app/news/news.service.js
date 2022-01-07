@@ -3,8 +3,7 @@ import { newsApi } from "./news.api"
 export const newsService = {
     getNews: async (query, plan) => {
         try {
-            console.log('plan')
-            console.log(plan)
+           
             const news = await newsApi.getNews(query, plan.api_key)
             const preview = store.state.preview.filter((e) => e.plan_id == plan.id)
             if (preview && preview[0]) {
@@ -16,8 +15,6 @@ export const newsService = {
                     response: news
                 }]
             }
-
-            console.log(store.state.preview)
         } catch (e) {
             console.log('errore get news')
             console.log(e)
