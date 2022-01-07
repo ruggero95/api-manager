@@ -43,12 +43,12 @@
         :icon="icons.mdiHomeOutline"
       ></nav-menu-link>
       <nav-menu-link
-        title="Add Plan"
-        :to="{ name: 'pages-account-settings'}"
-        :icon="icons.mdiAccountCogOutline"
+        title="Handle Plans"
+        :to="{ name: 'handle-plan'}"
+        :icon="icons.mdiFilePlusOutline"
       ></nav-menu-link>
        <nav-menu-group
-        title="Plans"
+        title="Use Plans"
         :icon="icons.mdiFileOutline"
       >
        
@@ -57,6 +57,11 @@
           :key="plan.id"
           :title="plan.name"
           :to="'/plans/'+plan.id"        
+        ></nav-menu-link>
+         <nav-menu-link 
+          v-if="this.localStore.state.plans.length==0"
+          title="Nome piano"
+          class="d-none"
         ></nav-menu-link>
        
       </nav-menu-group>
@@ -77,6 +82,7 @@ import {
   mdiFileOutline,
   mdiFormSelect,
   mdiAccountCogOutline,
+  mdiFilePlusOutline
 } from '@mdi/js'
 import NavMenuSectionTitle from './components/NavMenuSectionTitle.vue'
 import NavMenuGroup from './components/NavMenuGroup.vue'
@@ -111,6 +117,7 @@ export default {
         mdiFileOutline,
         mdiFormSelect,
         mdiAccountCogOutline,
+        mdiFilePlusOutline
       },
     }
   },
