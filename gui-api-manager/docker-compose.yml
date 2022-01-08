@@ -1,21 +1,19 @@
 version: '3.9'
 
 networks:
-  news-micro-network:
-    name: news-micro-network
+  gui-network:
+    name: gui-network
     driver: bridge
   api-manager-network:
     external: true
 
 services:
-  news-micro-app:
-    container_name: news-micro-app
+  gui-app:
+    container_name: gui-app
     restart: always
     build: .
     ports:
-      - 3000:3000
-    env_file:
-      - .env
+      - 8000:80
     networks:
-      - news-micro-network
+      - gui-network
       - api-manager-network
