@@ -43,12 +43,19 @@ export default {
       }]
     }
   },
+  created() {
+
+  },
   async mounted() {
     this.drawChart()
-    watch(
+    if(this.localStore.state.stop){
+      this.localStore.state.stop()
+    }
+    this.localStore.state.stop = watch(
       () => store.state.chartData,
       (count, prevCount) => {
         /* ... */
+        console.log('created redrawing')
         this.drawChart()
       }
     ).bind(this)
@@ -56,6 +63,10 @@ export default {
   methods: {
 
     async drawChart() {
+      if (!this.chart) {
+        console.log('add whatcher')
+
+      }
       if (this.chart) {
         this.chart.dispose();
       }
@@ -80,7 +91,7 @@ export default {
 
       var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.renderer.minWidth = 50;
-      valueAxis.fill  = '#9155fd'
+      valueAxis.fill = '#9155fd'
       valueAxis.renderer.labels.template.fill = am4core.color("#9155fd");
 
       // Create series
@@ -98,7 +109,7 @@ export default {
       series.columns.template.column.fillOpacity = 0.8;
 
       chart.colors.list = [
-          am4core.color("#9155fd"),
+        am4core.color("#9155fd"),
 
       ]
       // on hover, make corner radiuses bigger
