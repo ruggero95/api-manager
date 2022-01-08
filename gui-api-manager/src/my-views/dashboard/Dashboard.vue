@@ -37,7 +37,7 @@ import DashboardDatatable from './DashboardDatatable.vue'
 import {managerService} from "@/app/manager/manager.service"
 export default {
   async mounted(){
-    await managerService.retrievePlans()
+    //await managerService.retrievePlans()
     await managerService.retrieveRequests()
     await managerService.getWeeklySum()
   },

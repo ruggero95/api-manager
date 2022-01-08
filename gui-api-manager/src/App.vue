@@ -30,6 +30,7 @@ export default {
                 this.$vuetify.theme.dark = false;
             }
         }
+         await managerService.retrievePlans()
     },
   setup() {
     const { route } = useRouter()
