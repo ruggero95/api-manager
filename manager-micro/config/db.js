@@ -20,7 +20,10 @@ const connection = {
         try{
             if(connection.client){
 
-                connection.client.end().catch((e)=>{})
+                connection.client.end().catch((e)=>{
+                    console.log(e)
+                    console.log('error ending connection')
+                })
             }
             connection.client = new Client();
             connection.client.connect().catch((e)=>{

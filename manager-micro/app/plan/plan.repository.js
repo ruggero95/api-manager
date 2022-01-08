@@ -9,7 +9,11 @@ const planRepository = {
     },
     getByUserID:(userID)=>{
         return connection().query(`SELECT * FROM ${constants.TABLE_PLANS} WHERE user_id=$1`,[userID])
+    },
+    delete:(planID)=>{
+        return connection().query(`DELETE FROM ${constants.TABLE_PLANS} WHERE id=$1`,[planID])
     }    
+
 }
 
 module.exports = planRepository

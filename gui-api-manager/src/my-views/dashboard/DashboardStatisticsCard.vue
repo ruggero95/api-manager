@@ -55,7 +55,7 @@
         >
           <v-avatar
             size="44"
-            color="warning"
+            color="info"
             rounded
             class="elevation-1"
           >

@@ -43,11 +43,28 @@
         :icon="icons.mdiHomeOutline"
       ></nav-menu-link>
       <nav-menu-link
-        title="Account Settings"
-        :to="{ name: 'pages-account-settings'}"
-        :icon="icons.mdiAccountCogOutline"
+        title="Handle Plans"
+        :to="{ name: 'handle-plan'}"
+        :icon="icons.mdiFilePlusOutline"
       ></nav-menu-link>
-     
+       <nav-menu-group
+        title="Use Plans"
+        :icon="icons.mdiFileOutline"
+      >
+       
+      <nav-menu-link 
+          v-for="plan in this.localStore.state.plans"
+          :key="plan.id"
+          :title="plan.name"
+          :to="'/plans/'+plan.id"        
+        ></nav-menu-link>
+         <nav-menu-link 
+          v-if="this.localStore.state.plans.length==0"
+          title="Nome piano"
+          class="d-none"
+        ></nav-menu-link>
+       
+      </nav-menu-group>
     
     </v-list>
     
@@ -65,13 +82,20 @@ import {
   mdiFileOutline,
   mdiFormSelect,
   mdiAccountCogOutline,
+  mdiFilePlusOutline
 } from '@mdi/js'
 import NavMenuSectionTitle from './components/NavMenuSectionTitle.vue'
 import NavMenuGroup from './components/NavMenuGroup.vue'
 import NavMenuLink from './components/NavMenuLink.vue'
-
+import {store} from "@/app/mystore"
 export default {
-  components: {
+  data(){
+    return {
+      localStore: store
+
+    }
+  },
+  components: {    
     NavMenuSectionTitle,
     NavMenuGroup,
     NavMenuLink,
@@ -93,6 +117,7 @@ export default {
         mdiFileOutline,
         mdiFormSelect,
         mdiAccountCogOutline,
+        mdiFilePlusOutline
       },
     }
   },

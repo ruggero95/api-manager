@@ -20,7 +20,22 @@ router.post('/add', async (req, res, next)=>{
     }
 })
 
-
+router.post('/delete', async (req, res, next)=>{
+    try{
+        const user_id = req.body.user_id
+        const plan_id = req.body.plan_id
+        if(!user_id || !plan_id){
+            return badRequestResponse(res, 'Missing params')
+        }
+        const plan = await planService.deletePlan(plan_id)
+        if(plan){
+            return successResponse(res,'Plan deleted')
+        }
+        return errorResponse(res, 'Error deleting plan')
+    }catch(e){
+        next(e)
+    }
+})
 
 router.get('/key/:api_key', async (req, res, next)=>{
     try{

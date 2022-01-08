@@ -12,7 +12,6 @@ export const utils = {
         }
     },
     handleAxiosError: (error) => {
-        console.log('axios error')
         if(error && error.response && error.response.data && error.response.data.message){
             console.log(error.response.data.message)
             throw(new Error(error.response.data.message))
@@ -30,6 +29,11 @@ export const utils = {
             throw('missing payload')
         }
         return customHandler(payload)
+    },
+    cutTextAtWord:(text,cutter )=>{
+        let trimmedString = text.substr(0, cutter);
+        trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
+        return trimmedString != text ? `${trimmedString}...` : text
     }
 
 }
