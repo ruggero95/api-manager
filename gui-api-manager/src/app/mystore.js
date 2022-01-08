@@ -10,10 +10,12 @@ response replaced at each try of that plan
     }
 */
 export const store = {
+
     state:reactive({
         user:null,
         plans:[],
         requests:[],
-        preview:[]
+        preview:[],
+        chartData:{},
     })
 }

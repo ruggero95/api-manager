@@ -35,6 +35,14 @@ export const managerApi = {
                return true
             })
         }).catch(utils.handleAxiosError)
+    },
+    getWeeklyRequestSum:(start_date, end_date)=>{
+        console.log('week')
+        return axios.get(`${env.api_manager_backend}/plans/requests/byDateSum?start_date=${start_date}&end_date=${end_date}`,utils.getFullHeader(localStorage.getItem('token'))).then((response)=>{
+            return utils.hanldeAxiosResponse(response, (payload)=>{
+               return payload.data ? payload.data : []
+            })
+        }).catch(utils.handleAxiosError)
     }
 
 }
