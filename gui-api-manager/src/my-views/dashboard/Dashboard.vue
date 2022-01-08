@@ -1,22 +1,13 @@
 <template>
   <v-row>
-    <v-col
-      cols="12"
-      md="4"
-    >
+    <v-col cols="12" md="4">
       <dashboard-congratulation-john></dashboard-congratulation-john>
     </v-col>
-    <v-col
-      cols="12"
-      md="8"
-    >
+    <v-col cols="12" md="8">
       <dashboard-statistics-card></dashboard-statistics-card>
     </v-col>
 
-    <v-col
-      cols="12"
-      
-    >
+    <v-col cols="12">
       <dashboard-weekly-overview></dashboard-weekly-overview>
     </v-col>
   </v-row>
@@ -29,71 +20,33 @@ import { mdiPoll, mdiLabelVariantOutline, mdiCurrencyUsd, mdiHelpCircleOutline }
 // demos
 import DashboardCongratulationJohn from './DashboardCongratulationJohn.vue'
 import DashboardStatisticsCard from './DashboardStatisticsCard.vue'
-import DashboardCardTotalEarning from './DashboardCardTotalEarning.vue'
-import DashboardCardDepositAndWithdraw from './DashboardCardDepositAndWithdraw.vue'
-import DashboardCardSalesByCountries from './DashboardCardSalesByCountries.vue'
 import DashboardWeeklyOverview from './DashboardWeeklyOverview.vue'
-import DashboardDatatable from './DashboardDatatable.vue'
-import {managerService} from "@/app/manager/manager.service"
+import { managerService } from "@/app/manager/manager.service"
+import { store } from "@/app/mystore"
 export default {
-  async mounted(){
+  data() {
+    return {
+      localStore: store
+    }
+  },
+  async mounted() {
     //await managerService.retrievePlans()
-    await managerService.retrieveRequests()
-    await managerService.getWeeklySum()
+    try {
+      await managerService.retrieveRequests()
+      await managerService.getWeeklySum()
+    } catch (e) {
+      if (!this.localStore.state.NeworkError) {
+        this.localStore.state.NeworkError = true
+      }
+    }
   },
   components: {
     DashboardCongratulationJohn,
     DashboardStatisticsCard,
-    DashboardCardTotalEarning,
-    DashboardCardDepositAndWithdraw,
-    DashboardCardSalesByCountries,
     DashboardWeeklyOverview,
-    DashboardDatatable,
   },
   setup() {
-    const totalProfit = {
-      statTitle: 'Total Profit',
-      icon: mdiPoll,
-      color: 'success',
-      subtitle: 'Weekly Project',
-      statistics: '$25.6k',
-      change: '+42%',
-    }
 
-    const totalSales = {
-      statTitle: 'Refunds',
-      icon: mdiCurrencyUsd,
-      color: 'secondary',
-      subtitle: 'Past Month',
-      statistics: '$78',
-      change: '-15%',
-    }
-
-    // vertical card options
-    const newProject = {
-      statTitle: 'New Project',
-      icon: mdiLabelVariantOutline,
-      color: 'primary',
-      subtitle: 'Yearly Project',
-      statistics: '862',
-      change: '-18%',
-    }
-
-    const salesQueries = {
-      statTitle: 'Sales Quries',
-      icon: mdiHelpCircleOutline,
-      color: 'warning',
-      subtitle: 'Last week',
-      statistics: '15',
-      change: '-18%',
-    }
-
-    return {
-      totalProfit,
-      totalSales,
-      newProject,
-      salesQueries,
-    }
   },
 }
 </script>

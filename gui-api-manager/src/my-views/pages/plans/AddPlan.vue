@@ -62,7 +62,7 @@ export default {
                 this.loading = false
 
             } catch (e) {
-                this.message = e.message
+                this.message = typeof e=='string' ? e : e.message
                 this.showMessage = true
             }
             this.loading = false
@@ -70,7 +70,14 @@ export default {
         }
     },
     async mounted() {
-        await managerService.retrievePlans()
+        try {
+            await managerService.retrievePlans()
+
+        } catch (e) {
+            if (!this.localStore.state.NeworkError) {
+                this.localStore.state.NeworkError = true
+            }
+        }
     },
     setup() {
     },

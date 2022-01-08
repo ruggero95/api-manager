@@ -44,7 +44,9 @@ export default {
                 this.dialog = false
                 await managerService.deletePlan(this.plan_id)
             } catch (e) {
-                console.log(e)
+                if (!this.localStore.state.NeworkError) {
+                    this.localStore.state.NeworkError = true
+                }
             }
         }
     },

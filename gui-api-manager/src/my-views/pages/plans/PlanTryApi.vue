@@ -12,7 +12,12 @@
             <v-card-text class="flex-nowrap">
                 <v-form>
                     <v-text-field v-model="query" label="Query News" dense outlined></v-text-field>
-                    <v-btn color="primary" :loading="this.loading" class="me-3 mb-4" @click="searchApi">Search</v-btn>
+                    <v-btn
+                        color="primary"
+                        :loading="this.loading"
+                        class="me-3 mb-4"
+                        @click="searchApi"
+                    >Search</v-btn>
                 </v-form>
             </v-card-text>
 
@@ -21,7 +26,7 @@
             </v-card-text>
             <v-card-text class="flex-nowrap">
                 <pre class="pa-4 try-response rounded-lg doc">
-                    {{this.response}}
+                    {{ this.response }}
                 </pre>
             </v-card-text>
         </div>
@@ -31,7 +36,7 @@
 <style>
 .try-response {
     height: 250px;
-    overflow-y:scroll;
+    overflow-y: scroll;
 }
 </style>
 
@@ -45,33 +50,40 @@ export default {
         return {
             localStore: store,
             query: '',
-            response:'',
-            loading:false
+            response: '',
+            loading: false
         }
     },
-    computed:{
+    computed: {
         setResponse() {
-            const preview = this.localStore.state.preview.filter((e)=>e.plan_id==this.$route.params.id)
-            if(preview && preview[0]){
+            const preview = this.localStore.state.preview.filter((e) => e.plan_id == this.$route.params.id)
+            if (preview && preview[0]) {
                 this.response = preview[0].response
             }
         }
     },
     methods: {
         async searchApi() {
-            this.loading = true
-            if (this.query != '') {
-                const plan = this.localStore.state.plans.filter((e) => e.id == this.$route.params.id)
-                if (plan[0]) {
-                    await newsService.getNews(this.query, plan[0])
-                    await managerService.retrieveRequests()
-                    this.setResponse
-                }
+            try {
+                this.loading = true
+                if (this.query != '') {
+                    const plan = this.localStore.state.plans.filter((e) => e.id == this.$route.params.id)
+                    if (plan[0]) {
+                        await newsService.getNews(this.query, plan[0])
+                        await managerService.retrieveRequests()
+                        this.setResponse
+                    }
 
+                }
+            } catch (e) {
+                if (!this.localStore.state.NeworkError) {
+                    this.localStore.state.NeworkError = true
+                }
             }
             this.loading = false
+
         },
-        
+
     },
     setup() {
 

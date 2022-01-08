@@ -1,6 +1,7 @@
 <template>
   <component :is="resolveLayout">
     <router-view></router-view>
+    <BadError />
   </component>
 </template>
 
@@ -10,28 +11,38 @@ import { useRouter } from '@/utils'
 import LayoutBlank from '@/my-layouts/Blank.vue'
 import LayoutContent from '@/my-layouts/Content.vue'
 import { managerService } from './app/manager/manager.service'
-import { store} from "./app/mystore"
+import { store } from "./app/mystore"
+import BadError from "@/my-views/BadError.vue"
 export default {
   components: {
     LayoutBlank,
-    LayoutContent
+    LayoutContent,
+    BadError
   },
-  data(){
+  data() {
     return {
-      localStore:store
+      localStore: store
     }
   },
   async mounted() {
-        const theme = localStorage.getItem("theme");
-        if (theme) {
-            if (theme == "true") {
-                this.$vuetify.theme.dark = true;
-            } else {
-                this.$vuetify.theme.dark = false;
-            }
+    try {
+      const theme = localStorage.getItem("theme");
+      if (theme) {
+        if (theme == "true") {
+          this.$vuetify.theme.dark = true;
+        } else {
+          this.$vuetify.theme.dark = false;
         }
-         await managerService.retrievePlans()
-    },
+      }
+      await managerService.retrievePlans()
+    } catch (e) {
+      if(!this.localStore.state.NeworkError){
+          this.localStore.state.NeworkError = true
+      }
+      //this.localStore.state.NeworkError = true
+    }
+
+  },
   setup() {
     const { route } = useRouter()
 

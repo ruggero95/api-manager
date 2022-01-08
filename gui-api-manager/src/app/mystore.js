@@ -17,5 +17,7 @@ export const store = {
         requests:[],
         preview:[],
         chartData:{},
+        NeworkErrorMessage:'Network Error',
+        NeworkError:false
     })
 }
