@@ -49,7 +49,6 @@ export default {
       () => store.state.chartData,
       (count, prevCount) => {
         /* ... */
-        console.log('chart data change')
         this.drawChart()
       }
     ).bind(this)
@@ -60,7 +59,6 @@ export default {
       if (this.chart) {
         this.chart.dispose();
       }
-      console.log('drawing')
       let chart = am4core.create(this.$refs.chartdiv, am4charts.XYChart);
       chart.scrollbarX = new am4core.Scrollbar();
 

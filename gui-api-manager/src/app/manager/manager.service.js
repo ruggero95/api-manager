@@ -68,11 +68,7 @@ export const managerService = {
                 return 1
             }
             return 0
-        })
-        console.log('manager')
-        console.log(weeklySum)
- 
-
+        })  
         store.state.chartData = weeklySum
         
         return

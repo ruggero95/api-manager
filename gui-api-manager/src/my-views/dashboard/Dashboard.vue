@@ -25,7 +25,6 @@
 <script>
 // eslint-disable-next-line object-curly-newline
 import { mdiPoll, mdiLabelVariantOutline, mdiCurrencyUsd, mdiHelpCircleOutline } from '@mdi/js'
-import StatisticsCardVertical from '@/components/statistics-card/StatisticsCardVertical.vue'
 
 // demos
 import DashboardCongratulationJohn from './DashboardCongratulationJohn.vue'
@@ -43,7 +42,6 @@ export default {
     await managerService.getWeeklySum()
   },
   components: {
-    StatisticsCardVertical,
     DashboardCongratulationJohn,
     DashboardStatisticsCard,
     DashboardCardTotalEarning,

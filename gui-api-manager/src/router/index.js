@@ -17,11 +17,7 @@ const routes = [
     },
     component: () => import('@/my-views/dashboard/Dashboard.vue'),
   },  
-  {
-    path: '/pages/account-settings',
-    name: 'pages-account-settings',
-    component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
-  },
+ 
   {
     path: '/handle-plan',
     name: 'handle-plan',

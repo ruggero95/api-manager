@@ -30,7 +30,6 @@ export default {
                 this.$vuetify.theme.dark = false;
             }
         }
-        managerService.getWeeklySum()
     },
   setup() {
     const { route } = useRouter()
