@@ -17,7 +17,14 @@ const routes = [
     },
     component: () => import('@/my-views/dashboard/Dashboard.vue'),
   },  
- 
+ /* {
+    path: '/faq',
+    name: 'faq',
+    meta:{
+      requiresAuth:true
+    },
+    component: () => import('@/my-views/Faq.vue'),
+  },*/
   {
     path: '/handle-plan',
     name: 'handle-plan',

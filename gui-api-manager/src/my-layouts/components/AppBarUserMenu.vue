@@ -74,7 +74,7 @@
      
 
       <!-- FAQ -->
-      <v-list-item link>
+     <!-- <v-list-item link to="/faq">
         <v-list-item-icon class="me-2">
           <v-icon size="22">
             {{ icons.mdiHelpCircleOutline }}
@@ -84,10 +84,10 @@
           <v-list-item-title>FAQ</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-
+-->
 
       <!-- Logout -->
-      <v-list-item link>
+      <v-list-item link class="mt-2">
         <v-list-item-icon class="me-2">
           <v-icon size="22">
             {{ icons.mdiLogoutVariant }}
