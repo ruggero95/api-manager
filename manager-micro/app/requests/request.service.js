@@ -23,8 +23,8 @@ const requestService = {
     },
     getByDate: async (user_id, start_date, end_date)=>{
         const plans = await planRepository.getByUserID(user_id)
-        if(!plans || !plans.rows){
-            throw('error response: missing plan')
+        if(!plans || !plans.rows || plans.rows.length==0){
+            return []
         }
        
         const requests = await requestRepository.getRequestsByIntervalDate(start_date,end_date, plans.rows)
@@ -35,10 +35,10 @@ const requestService = {
     },
     getByDateSum: async (user_id, start_date, end_date)=>{
         const plans = await planRepository.getByUserID(user_id)
-        if(!plans || !plans.rows){
-            throw('error response: missing plan')
+        if(!plans || !plans.rows || plans.rows.length==0){
+            return []
         }
-       
+        
         const requests = await requestRepository.getRequestsSumByDate(start_date,end_date, plans.rows)
         if(!request || !requests.rows){
             throw('Error retriving requests')
