@@ -32,6 +32,18 @@ const requestService = {
             throw('Error retriving requests')
         }
         return requests.rows
+    },
+    getByDateSum: async (user_id, start_date, end_date)=>{
+        const plans = await planRepository.getByUserID(user_id)
+        if(!plans || !plans.rows){
+            throw('error response: missing plan')
+        }
+       
+        const requests = await requestRepository.getRequestsSumByDate(start_date,end_date, plans.rows)
+        if(!request || !requests.rows){
+            throw('Error retriving requests')
+        }
+        return requests.rows
     }
 }
 

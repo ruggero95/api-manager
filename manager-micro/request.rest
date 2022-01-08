@@ -43,3 +43,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDU2MDZjY
 GET http://localhost:4000/plans/requests/bydate?start_date=2020-08-01&end_date=2022-09-01
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDU2MDZjYjRjMTJkZGYwN2YwZjcxNCIsInVzZXJuYW1lIjoidGVzdCIsImlhdCI6MTY0MTM3NjI4MSwiZXhwIjoxNjQxNTQ5MDgxfQ.zU8pwGHoskg10wQB28-iEuhlIoWtlbrK_-kT3gtmn9g
+
+###
+GET http://localhost:4000/plans/requests/byDateSum?start_date=2022-01-03&end_date=2022-01-09
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDU2MDZjYjRjMTJkZGYwN2YwZjcxNCIsInVzZXJuYW1lIjoidGVzdCIsImlhdCI6MTY0MTU1MTMwMSwiZXhwIjoxNjQxNzI0MTAxfQ.1AdGL2zXoLhcf2rfyOiRFiwxFBnpq8OXMv4-i5SE9rQ

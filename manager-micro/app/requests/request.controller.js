@@ -39,5 +39,26 @@ router.get('/requests/bydate', async (req, res, next)=>{
     }
 })
 
+router.get('/requests/byDateSum', async (req, res, next)=>{
+    try{      
+        const user_id = req.body.user_id //injected by middleware
+        const start_date = req.query.start_date
+        const end_date = req.query.end_date 
+        console.log(start_date)
+        console.log(end_date)
+        if(!user_id){
+            return badRequestResponse(res,'Missing user id')
+        }
+        console.log(user_id)
+        const requests = await requestService.getByDateSum(user_id, start_date, end_date)
+        if(requests){
+            return successResponse(res,'User requests',requests)
+        }
+        return errorResponse(res, 'Error retriving news')
+    }catch(e){
+        next(e)
+    }
+})
+
 
 module.exports = router
