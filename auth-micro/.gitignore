@@ -1,8 +1,6 @@
 node_modules
 build
 auth-db
-docker-compose.yml
-docker-compose.prod.yml
 DockerfileDEV
 nodemon.json
 .env

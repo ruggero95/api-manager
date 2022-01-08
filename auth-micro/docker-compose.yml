@@ -1,0 +1,56 @@
+version: '3.9'
+
+networks:
+  auth-micro-network:
+    name: auth-micro-network
+    driver: bridge
+  api-manager-network:
+    external: true
+
+volumes:
+  auth-micro-data:
+    name: auth-micro-data
+    driver: local
+  auth-micro-logs:
+    name: auth-micro-logs
+    driver: local
+
+services:
+  auth-micro-app:
+    container_name: auth-micro-app
+    restart: always
+    build: .
+    ports:
+      - 4003:4003
+    env_file:
+      - .env
+    networks:
+      - auth-micro-network
+      - api-manager-network
+    volumes:
+      - auth-micro-logs:/home/node/app/log
+
+  auth-micro-db:
+    container_name: auth-micro-db
+    restart: always
+    image: mongo:4.4.11
+    volumes:
+      - auth-micro-data:/data/db
+    env_file:
+      - .env
+    networks:
+      - auth-micro-network
+  
+  auth-micro-db-web:
+    container_name: auth-micro-db-web
+    restart: always
+    image: mongo-express:0.54.0
+    ports:
+      - 8081:8081
+    env_file:
+      - .env
+    networks:
+      - auth-micro-network
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
