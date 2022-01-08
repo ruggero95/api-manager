@@ -8,7 +8,7 @@
                         <v-card-text>Are you sure you want to delete your plan? when deleting a plan also all your requests related to the plan are deleted.</v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" text @click="dialog = false">Disagree</v-btn>
+                            <v-btn color="primary" text @click="dialog = false">Cancel</v-btn>
                             <v-btn color="error" text @click="deletePlan">Confirm</v-btn>
                         </v-card-actions>
                     </v-card>

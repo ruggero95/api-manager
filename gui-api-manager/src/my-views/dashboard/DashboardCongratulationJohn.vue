@@ -19,7 +19,7 @@
 
             <v-btn
               small
-              color="primary" @click="localStore.state.requests=[]"
+              color="primary" v-if="this.localStore.state.plans.length>0" :to="'plans/'+(this.localStore.state.plans[0] ? this.localStore.state.plans[0].id : '')"
             >
               Try api
             </v-btn>

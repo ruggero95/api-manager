@@ -9,7 +9,7 @@ import { computed } from '@vue/composition-api'
 import { useRouter } from '@/utils'
 import LayoutBlank from '@/my-layouts/Blank.vue'
 import LayoutContent from '@/my-layouts/Content.vue'
-import { managerApi } from './app/manager/manager.api'
+import { managerService } from './app/manager/manager.service'
 import { store} from "./app/mystore"
 export default {
   components: {
@@ -30,7 +30,7 @@ export default {
                 this.$vuetify.theme.dark = false;
             }
         }
-      
+        managerService.getWeeklySum()
     },
   setup() {
     const { route } = useRouter()

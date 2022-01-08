@@ -40,6 +40,7 @@ export default {
   async mounted(){
     await managerService.retrievePlans()
     await managerService.retrieveRequests()
+    await managerService.getWeeklySum()
   },
   components: {
     StatisticsCardVertical,
