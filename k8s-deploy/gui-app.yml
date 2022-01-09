@@ -1,3 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gui-configmap
+data:
+  auth_url: "http://localhost/auth-micro/"
+  manager_url: "http://localhost/manager-micro/"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,6 +26,17 @@ spec:
       - image: ghcr.io/ruggero95/api-manager/gui:master
         imagePullPolicy: Always
         name: gui
+        env:
+          - name: AUTH_URL
+            valueFrom: 
+              configMapKeyRef:
+                name: gui-configmap
+                key: auth_url
+          - name: MANAGER_URL
+            valueFrom: 
+              configMapKeyRef:
+                name: gui-configmap
+                key: manager_url
 ---
 apiVersion: v1
 kind: Service
