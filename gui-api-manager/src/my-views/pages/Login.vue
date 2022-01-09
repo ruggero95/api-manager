@@ -44,12 +44,13 @@
               label="Username"
               placeholder="mario.rossi"
               hide-details
-          
+              autocomplete="username"
               class="mb-3"
             ></v-text-field>
 
             <v-text-field
               v-model="password"
+              autocomplete="new-password"
               outlined
               :type="isPasswordVisible ? 'text' : 'password'"
               hide-details
@@ -66,7 +67,6 @@
               class="mt-6"
               type="submit"
               :loading="this.loading"
-              @click="login"
             >
               Enter
             </v-btn>
@@ -136,8 +136,8 @@ export default {
           await authApi.login(this.username, this.password)
           this.loginMessage = 'Login Successful'
           this.showMessage = true
-          setTimeout(function(){
-            router.push('/dashboard')
+          setTimeout(()=>{
+            this.$router.push('/dashboard')
           },1000)
         }
       }catch(e){
