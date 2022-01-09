@@ -10,7 +10,6 @@ import { computed } from '@vue/composition-api'
 import { useRouter } from '@/utils'
 import LayoutBlank from '@/my-layouts/Blank.vue'
 import LayoutContent from '@/my-layouts/Content.vue'
-import { managerService } from './app/manager/manager.service'
 import { store } from "./app/mystore"
 import BadError from "@/my-views/BadError.vue"
 export default {
@@ -33,8 +32,8 @@ export default {
         } else {
           this.$vuetify.theme.dark = false;
         }
-      }
-      await managerService.retrievePlans()
+      }  
+     
     } catch (e) {
       if(!this.localStore.state.NeworkError){
           this.localStore.state.NeworkError = true

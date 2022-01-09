@@ -74,12 +74,16 @@ import { mdiMagnify, mdiBellOutline, mdiGithub } from '@mdi/js'
 import VerticalNavMenu from './components/vertical-nav-menu/VerticalNavMenu.vue'
 import ThemeSwitcher from './components/ThemeSwitcher.vue'
 import AppBarUserMenu from './components/AppBarUserMenu.vue'
+import { managerService } from '@/app/manager/manager.service'
 
 export default {
   components: {
     VerticalNavMenu,
     ThemeSwitcher,
     AppBarUserMenu,
+  },
+  mounted(){
+    managerService.retrievePlans()
   },
   setup() {
     const isDrawerOpen = ref(null)
