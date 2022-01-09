@@ -41,8 +41,6 @@ export const managerService = {
 
         const start = dayjs().startOf('isoWeek')
         const end = dayjs().endOf('isoWeek')
-        console.log(start)
-        console.log(end)
         let weeklySum = await managerApi.getWeeklyRequestSum(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'))
         for (let i = 0; i < 7; i++) {
             const day = (start.add(i, 'day').format('YYYY-MM-DD'))
@@ -74,9 +72,9 @@ export const managerService = {
                 return 1
             }
             return 0
-        })  
+        })
         store.state.chartData = weeklySum
-        
+
         return
     }
 

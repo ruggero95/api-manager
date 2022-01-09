@@ -55,18 +55,13 @@ export default {
       () => store.state.chartData,
       (count, prevCount) => {
         /* ... */
-        console.log('created redrawing')
         this.drawChart()
       }
     ).bind(this)
   },
   methods: {
 
-    async drawChart() {
-      if (!this.chart) {
-        console.log('add whatcher')
-
-      }
+    async drawChart() {     
       if (this.chart) {
         this.chart.dispose();
       }
