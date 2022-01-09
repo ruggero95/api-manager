@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: gui-configmap
 data:
-  auth_url: "http://localhost:4003"
-  manager_url: "http://localhost:4000"
+  auth_url: "http://localhost/auth-micro/"
+  manager_url: "http://localhost/manager-micro/"
 ---
 apiVersion: apps/v1
 kind: Deployment
