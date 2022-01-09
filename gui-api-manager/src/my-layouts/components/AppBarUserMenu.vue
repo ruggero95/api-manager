@@ -87,14 +87,14 @@
 -->
 
       <!-- Logout -->
-      <v-list-item link class="mt-2">
+      <v-list-item @click="logout" link class="mt-2">
         <v-list-item-icon class="me-2">
           <v-icon size="22">
             {{ icons.mdiLogoutVariant }}
           </v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title @click="logout">Logout</v-list-item-title>
+          <v-list-item-title >Logout</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
