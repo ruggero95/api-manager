@@ -10,7 +10,7 @@
                 <span class="font-weight-semibold">Input some query for news</span>
             </v-card-text>
             <v-card-text class="flex-nowrap">
-                <v-form>
+                <v-form @submit.prevent="searchApi">
                     <v-text-field v-model="query" label="Query News" dense outlined></v-text-field>
                     <v-btn
                         color="primary"
