@@ -7,10 +7,6 @@ name: Build & Push Docker Image / GUI
 
 on:
   push:
-    # Publish `master` image.
-    branches:
-      - master
-        
     # Publish `v1.2.3` tags as releases.
     tags:
       - v*
