@@ -38,6 +38,7 @@
 </style>
 <script>
 import { utils } from "@/app/config/utils"
+import dayjs from "dayjs"
 export default {
     props: ['title', 'image', 'description', 'author', 'url', 'date', 'category'],
     data() {
@@ -80,8 +81,7 @@ export default {
 
         },
         getDate(date) {
-            const dateParsed = new Date(date)
-            return `${dateParsed.getDate()}/${(dateParsed.getMonth() + 1).toString().padStart(2, 0)}/${dateParsed.getFullYear()}  ${(dateParsed.getHours()).toString().padStart(2, '0')}:${(dateParsed.getMinutes()).toString().padStart(2, '0')}`
+            return dayjs(date).format('DD-MM-YYYY HH:mm')
         }
     },
     setup() {
