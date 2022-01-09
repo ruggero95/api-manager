@@ -19,5 +19,10 @@ WORKDIR /usr/src/app
 # Copy app
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY entrypoint.sh ./
+# Make the entrypoint executable
+RUN chmod +x ./entrypoint.sh
 # Expose ports 
 EXPOSE 80
+# Run entrypoint
+ENTRYPOINT [ "./entrypoint.sh" ]

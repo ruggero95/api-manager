@@ -33,6 +33,7 @@ import PlanPreview from "@/my-views/pages/plans/PlanPreview.vue"
 import PlanTryApi from "@/my-views/pages/plans/PlanTryApi.vue"
 // demos
 import { store } from "@/app/mystore"
+import { watch } from '@vue/composition-api';
 
 export default {
   components: {
@@ -41,10 +42,24 @@ export default {
     PlanTryApi
   },
   created() {
-    const plan = store.state.plans.filter((e) => e.id == this.$route.params.id)
-    if (!plan || plan.length == 0) {
-      this.$router.push('/dashboard')
+    console.log('plan created')
+
+  },
+  mounted() {    
+    if (store.state.stopPlan) {
+      store.state.stopPlan()
     }
+    store.state.stopPlan = watch(
+      () => store.state.plans,
+      (count, prevCount) => {
+        if (this.$route.path.search('\/plans\/') != -1) {
+          const plan = store.state.plans.filter((e) => e.id == this.$route.params.id)
+          if (!plan || plan.length == 0) {
+            this.$router.push('/dashboard')
+          }
+        }
+      }
+    ).bind(this)
   },
   setup() {
     const tab = ref('')
@@ -56,7 +71,7 @@ export default {
       { title: 'Preview', icon: mdiInformationOutline },
     ]
 
-  
+
 
     return {
       tab,

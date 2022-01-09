@@ -18,11 +18,14 @@
         <v-card>
             <v-card-title>Plan: {{ plan_name }}</v-card-title>
             <v-card-text>
-                <router-link :to="'/plans/' + plan_id">
-                    <v-btn color="primary me-4">Try Api</v-btn>
-                </router-link>
-
-                <v-btn color="error" @click="dialog = true">Delete</v-btn>
+                <v-row>
+                    <v-col cols="12">
+                        <router-link :to="'/plans/' + plan_id">
+                            <v-btn class="mt-1" color="primary me-4">Try Api</v-btn>
+                        </router-link>
+                        <v-btn class="mt-1" color="error" @click="dialog = true">Delete</v-btn>
+                    </v-col>
+                </v-row>
             </v-card-text>
         </v-card>
     </div>

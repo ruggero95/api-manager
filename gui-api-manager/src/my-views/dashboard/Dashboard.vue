@@ -29,6 +29,9 @@ export default {
       localStore: store
     }
   },
+  async created() {
+   
+  },
   async mounted() {
     //await managerService.retrievePlans()
     try {

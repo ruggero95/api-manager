@@ -6,6 +6,16 @@
             <v-card-title class="flex-nowrap">
                 <span class="text-break">Documentation</span>
             </v-card-title>
+              <v-card-text class="flex-nowrap">
+                <span class="font-weight-semibold">Api Key</span>
+            </v-card-text>
+            <v-card-text class="flex-nowrap">
+                <div class="pa-4 rounded-lg doc">                   
+                    <span class="d-block">
+                        <span class="">{{ getPlanKey }}</span>
+                    </span>
+                </div>
+            </v-card-text>
             <v-card-text class="flex-nowrap">
                 <span class="font-weight-semibold">Example Request</span>
             </v-card-text>

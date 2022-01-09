@@ -1,18 +1,18 @@
 {
-    "$schema": "https://json.schemastore.org/tsconfig",
-    "display": "Node 16",
-  
-    "compilerOptions": {
-      "lib": ["es2021"],
-      "module": "commonjs",
-      "target": "es2021",
-      "outDir": "./build",
-      "noImplicitAny": false,
-      //"strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "baseUrl": "./src",
-      "resolveJsonModule": true,
-      "forceConsistentCasingInFileNames": true
-    }
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 16",
+
+  "compilerOptions": {
+    "lib": ["es2021"],
+    "module": "commonjs",
+    "target": "es2021",
+    "outDir": "./build",
+    "noImplicitAny": false,
+    //"strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "baseUrl": "./src",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
   }
+}

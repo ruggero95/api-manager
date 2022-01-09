@@ -11,7 +11,6 @@ router.get('/news', newsMiddleware.checkApikey, async (req, res, next)=>{
         const lang = req.query.lang || 'en'; // default: en
         const country = req.query.country || 'US'; // default: US
         const api_key = req.query.api_key || ''; // default: US
-
         const news = await requestService.processRequest(api_key, keywords,lang,country)
         if(news){
             return successResponse(res,'News',news)

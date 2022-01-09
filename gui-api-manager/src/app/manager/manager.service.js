@@ -1,6 +1,8 @@
 import { store } from "@/app/mystore"
 import { managerApi } from "./manager.api"
 import dayjs from "dayjs"
+import isoWeek from 'dayjs/plugin/isoWeek'
+
 export const managerService = {
     retrievePlans: async () => {
         const plans = await managerApi.getPlansByUserID()
@@ -35,8 +37,10 @@ export const managerService = {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
     },
     getWeeklySum: async () => {
-        const start = dayjs().startOf('week').add(1, 'day')
-        const end = dayjs().endOf('week').add(1, 'day')
+        dayjs.extend(isoWeek)
+
+        const start = dayjs().startOf('isoWeek')
+        const end = dayjs().endOf('isoWeek')
         let weeklySum = await managerApi.getWeeklyRequestSum(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'))
         for (let i = 0; i < 7; i++) {
             const day = (start.add(i, 'day').format('YYYY-MM-DD'))
@@ -68,9 +72,9 @@ export const managerService = {
                 return 1
             }
             return 0
-        })  
+        })
         store.state.chartData = weeklySum
-        
+
         return
     }
 

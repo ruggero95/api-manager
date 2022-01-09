@@ -43,7 +43,7 @@ router.get('/key/:api_key', async (req, res, next)=>{
         if(!api_key){
             return badRequestResponse(res,'Missing apy key')
         }
-        const { rows } = await planRepository.getByApiKey(api_key)
+        const  rows  = await planRepository.getByApiKey(api_key)
         if(rows && rows[0]){
             return successResponse(res, 'Plans', rows)
         }
@@ -59,7 +59,7 @@ router.get('/user', async (req, res, next)=>{
         if(!user_id){
             return badRequestResponse(res,'Missing user id')
         }
-        const { rows } = await planRepository.getByUserID(user_id)
+        const rows  = await planRepository.getByUserID(user_id)
         if(rows && rows[0]){
             return successResponse(res, 'Plans', rows)
         }

@@ -37,39 +37,36 @@
         <v-card-text>
         
           <ShowMessage  v-if="this.showMessage" :type="this.typeLogin" :message="this.loginMessage"></ShowMessage>
-          <v-form>
+          <v-form @submit.prevent="login">
             <v-text-field
               v-model="username"
               outlined
               label="Username"
               placeholder="mario.rossi"
               hide-details
+              autocomplete="username"
               class="mb-3"
             ></v-text-field>
 
             <v-text-field
               v-model="password"
+              autocomplete="new-password"
               outlined
               :type="isPasswordVisible ? 'text' : 'password'"
+              hide-details
               label="Password"
               placeholder="············"
               :append-icon="isPasswordVisible ? icons.mdiEyeOffOutline : icons.mdiEyeOutline"
-              hide-details
               @click:append="isPasswordVisible = !isPasswordVisible"
             ></v-text-field>
 
-            <div class="d-flex align-center justify-space-between flex-wrap">
-             
-
-              <!-- forgot link -->
-              
-            </div>
-
+            
             <v-btn
               block
               color="primary"
               class="mt-6"
-              @click="login()"
+              type="submit"
+              :loading="this.loading"
             >
               Enter
             </v-btn>
@@ -108,7 +105,7 @@
 
 <script>
 // eslint-disable-next-line object-curly-newline
-import { mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline } from '@mdi/js'
+import { mdiEyeOutline, mdiEyeOffOutline } from '@mdi/js'
 import { ref } from '@vue/composition-api'
 import { authApi } from '@/app/auth/auth.api'
 import { store } from "@/app/mystore"
@@ -125,11 +122,13 @@ export default {
       showMessage:false,
       typeLogin:'',
       username:'',
-      password:''
+      password:'',
+      loading:false
     }
   },
   methods:{
-    async login(){      
+    async login(){  
+      this.loading = true    
       this.typeLogin="success"
       this.showMessage = false
       try{
@@ -137,8 +136,8 @@ export default {
           await authApi.login(this.username, this.password)
           this.loginMessage = 'Login Successful'
           this.showMessage = true
-          setTimeout(function(){
-            router.push('/dashboard')
+          setTimeout(()=>{
+            this.$router.push('/dashboard')
           },1000)
         }
       }catch(e){
@@ -148,41 +147,14 @@ export default {
         this.typeLogin="error"
 
       }
+      this.loading = false
     }
   },
   setup() {
     const isPasswordVisible = ref(false)
-    const email = ref('')
-    const password = ref('')
-    const socialLink = [
-      {
-        icon: mdiFacebook,
-        color: '#4267b2',
-        colorInDark: '#4267b2',
-      },
-      {
-        icon: mdiTwitter,
-        color: '#1da1f2',
-        colorInDark: '#1da1f2',
-      },
-      {
-        icon: mdiGithub,
-        color: '#272727',
-        colorInDark: '#fff',
-      },
-      {
-        icon: mdiGoogle,
-        color: '#db4437',
-        colorInDark: '#db4437',
-      },
-    ]
-
+  
     return {
       isPasswordVisible,
-      email,
-      password,
-      socialLink,
-
       icons: {
         mdiEyeOutline,
         mdiEyeOffOutline,
