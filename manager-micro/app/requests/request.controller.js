@@ -12,10 +12,10 @@ router.get('/requests', async (req, res, next)=>{
             return badRequestResponse(res,'Missing user id')
         }
         const requests = await requestRepository.getByUserId(user_id)
-        if(requests && requests.rows ){
-            return successResponse(res,'User requests',requests.rows)
+        if(requests && requests.length>0 ){
+            return successResponse(res,'User requests',requests)
         }
-        return errorResponse(res, 'Error retriving news')
+        return errorResponse(res, 'Error retriving request')
     }catch(e){
         next(e)
     }
@@ -44,12 +44,10 @@ router.get('/requests/byDateSum', async (req, res, next)=>{
         const user_id = req.body.user_id //injected by middleware
         const start_date = req.query.start_date
         const end_date = req.query.end_date 
-        console.log(start_date)
-        console.log(end_date)
+     
         if(!user_id){
             return badRequestResponse(res,'Missing user id')
         }
-        console.log(user_id)
         const requests = await requestService.getByDateSum(user_id, start_date, end_date)
         if(requests){
             return successResponse(res,'User requests',requests)

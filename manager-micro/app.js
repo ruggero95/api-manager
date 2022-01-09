@@ -5,12 +5,9 @@ const cors = require('cors')
 require('dotenv').config();
 const mainRouter = require('./app/index.controller')
 const app = express()
+const initterDB = require('./config/dbInitter')
 
-//const dbInit = require('./config/dbInit')
-const db = require('./config/db')
-//dbInit.init()
-db.connection()
-db.tables()
+initterDB.checkConnection() 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

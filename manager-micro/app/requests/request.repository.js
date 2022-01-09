@@ -1,48 +1,50 @@
-const { connection } = require('./../../config/db')
+const knex = require('./../../config/db')
 const constants = require('./../../config/constants')
 const dayjs = require('dayjs')
 const requestRepository = {
     create: (planID) => {
-        return connection().query(`INSERT INTO ${constants.TABLE_REQUESTS}(plan_id,date) VALUES ($1,$2)`, [planID, dayjs().format('YYYY-MM-DD HH:mm:ss')])
+        return knex(constants.TABLE_REQUESTS).insert({
+            plan_id: planID,
+            date: dayjs().format('YYYY-MM-DD HH:mm:ss')
+        })
     },
     getByRequestsByPlanID: (planID) => {
-        return connection().query(`SELECT * FROM ${constants.TABLE_REQUESTS} WHERE plan_id=$1`, [planID])
+        return knex.select().from(constants.TABLE_REQUESTS).where({ plan_id: planID })
     },
     getByUserId: (userID) => {
-        return connection().query(`SELECT * FROM ${constants.TABLE_REQUESTS} AS R LEFT JOIN ${constants.TABLE_PLANS} AS P ON R.plan_id=P.id WHERE P.user_id=$1`, [userID])
+        return knex.select().from(`${constants.TABLE_REQUESTS} as R`).leftJoin(`${constants.TABLE_PLANS} AS P`, 'R.plan_id', 'P.id').where("P.user_id", userID)
     },
-    getRequestsByIntervalDate: (startDate, endDate, plans = null) => {
-        let query = `SELECT * FROM ${constants.TABLE_REQUESTS} where DATE(date)>$1 AND DATE(date)<$2`
-        let values = [startDate, endDate]
+    getRequestsByIntervalDate: (startDate, endDate, plans) => {
+        let plans_id = []
         if (plans) {
-            let plans_id = []
             for (let i = 0; i < plans.length; i++) {
                 plans_id = [...plans_id, plans[i].id]
             }
-            values = [...values, ...plans_id]
-
-            query += ` AND plan_id IN (${plans_id.join(',')})`
-
         }
-        return connection().query(query, values)
+
+        return knex.select().from(constants.TABLE_REQUESTS)
+            .whereRaw('DATE(date)>=?', [startDate])
+            .whereRaw('DATE(date)<=?', [endDate])
+            .whereIn('plan_id', plans_id)
     },
     getRequestsSumByDate: (startDate, endDate, plans) => {
         //SELECT sum(id/id),DATE(date) FROM requests group by DATE(date) ORDER BY DATE
-        let query = `SELECT sum(id/id),DATE(date) FROM ${constants.TABLE_REQUESTS} where DATE(date)>=$1 AND DATE(date)<=$2`
-        let values = [startDate, endDate]
-        let startV = (values.length+1)
-        let plans_id_n = []
-        for (let i = 0; i < plans.length; i++) {
-            values = [...values, plans[i].id]
-            plans_id_n = [...plans_id_n, `$${(i+startV)}`]
+        let plans_id = []
+        if (plans) {
+            for (let i = 0; i < plans.length; i++) {
+                plans_id = [...plans_id, plans[i].id]
+            }
         }
-        query += ` AND plan_id IN (${plans_id_n.join(',')})`
 
-        query += ' GROUP BY DATE(date) ORDER BY date'
-        return connection().query(query, values)
-    },
+        return  knex.select(knex.raw('sum(id/id)'), knex.raw('DATE(date)')).from(constants.TABLE_REQUESTS)
+            .whereRaw('DATE(date)>=?', [startDate])
+            .whereRaw('DATE(date)<=?', [endDate])
+            .whereIn('plan_id', plans_id)
+            .groupByRaw('DATE(date)')
+            .orderBy('date')
+           },
     deleteByPlanId: (planID) => {
-        return connection().query(`DELETE FROM ${constants.TABLE_REQUESTS} WHERE plan_id=$1`, [planID])
+        return knex(constants.TABLE_REQUESTS).where({ plan_id: planID }).del()
     }
 }
 
