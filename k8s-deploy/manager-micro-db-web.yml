@@ -28,7 +28,7 @@ metadata:
 spec:
   selector:
     app: adminer
-  type: LoadBalancer  
+  type: ClusterIP
   ports:
     - protocol: TCP
       port: 8080

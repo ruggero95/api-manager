@@ -94,5 +94,4 @@ spec:
     targetPort: 4000
   selector:
     app: manager-micro
-  #type: ClusterIP se uso ingress dopo
-  type: LoadBalancer
+  type: ClusterIP

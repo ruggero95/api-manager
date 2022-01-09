@@ -78,5 +78,4 @@ spec:
     targetPort: 4003
   selector:
     app: auth-micro
-  #type: ClusterIP se uso ingress dopo
-  type: LoadBalancer
+  type: ClusterIP
