@@ -82,11 +82,13 @@ export default {
     ThemeSwitcher,
     AppBarUserMenu,
   },
+  async created(){
+  },
   mounted(){
-    managerService.retrievePlans()
   },
   setup() {
     const isDrawerOpen = ref(null)
+    managerService.retrievePlans()
 
     return {
       isDrawerOpen,

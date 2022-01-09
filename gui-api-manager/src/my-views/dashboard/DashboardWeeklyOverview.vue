@@ -43,12 +43,12 @@ export default {
       }]
     }
   },
-  created() {
+  async created() {
 
   },
   async mounted() {
     this.drawChart()
-    if(this.localStore.state.stop){
+    if (this.localStore.state.stop) {
       this.localStore.state.stop()
     }
     this.localStore.state.stop = watch(
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
 
-    async drawChart() {     
+    async drawChart() {
       if (this.chart) {
         this.chart.dispose();
       }
