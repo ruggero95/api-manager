@@ -1,4 +1,4 @@
 export const env = {
-    auth_backend:'http://localhost:4003',
-    api_manager_backend:'http://localhost:4000'
+    auth_backend:'{{replace_auth_url}}',
+    api_manager_backend:'{{replace_manager_url}}'
 }
