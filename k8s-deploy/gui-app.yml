@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: gui-configmap
 data:
-  auth_url: "http://localhost/auth-micro/"
-  manager_url: "http://localhost/manager-micro/"
+  auth_url: "http://backend.api/auth-micro"
+  manager_url: "http://backend.api/manager-micro"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -23,7 +23,7 @@ spec:
         app: gui
     spec:
       containers:
-      - image: ghcr.io/ruggero95/api-manager/gui:master
+      - image: ghcr.io/ruggero95/api-manager/gui:latest
         imagePullPolicy: Always
         name: gui
         env:

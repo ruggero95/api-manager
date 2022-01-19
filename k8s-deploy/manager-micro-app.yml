@@ -4,10 +4,10 @@ metadata:
   name: manager-micro-configmap
 data:
   manager_port: '4000'
-  news_host: http://localhost
-  news_port: '3000'
-  auth_host: http://localhost
-  auth_port: '5000'
+  news_host: http://backend.api/news-micro
+  news_port: '80'
+  auth_host: http://backend.api/auth-micro
+  auth_port: '80'
 ---
 apiVersion: apps/v1
 kind: Deployment
