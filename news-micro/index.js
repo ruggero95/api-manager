@@ -5,8 +5,9 @@ const superagent = require('superagent');
 
 // Init environments
 require('dotenv').config();
-// Get environments
-const PORT = process.env.PORT || 3000;
+
+// Set constants
+const PORT = 3000;
 
 // Init webserver
 const app = express();
