@@ -8,7 +8,7 @@ export const newsService = {
             const preview = store.state.preview.filter((e) => e.plan_id == plan.id)
             if (preview && preview[0]) {
                 //esiste una preview la sovrascrivo
-                preview.news = news
+                preview[0].response = news
             } else {
                 store.state.preview = [...store.state.preview, {
                     plan_id: plan.id,
