@@ -4,7 +4,7 @@ const {NEWS_HOST, NEWS_PORT} = require('./../../config/constants')
 const newsApi = {
     getNews:(keywords, lang, country)=>{
         return axios.post(NEWS_HOST + ':' + NEWS_PORT + '/search', {
-            keywords: keywords || '',
+            q: keywords || '',
             lang: lang || '',
             country: country || ''
         }).then((resAxios)=>{
