@@ -36,7 +36,7 @@ Extra features are:
 - a GUI to easily use the platform
 
 ### Automations
-The repo is equipped with multiple automations [using GiHub Actions](https://github.com/ruggero95/api-manager/actions) capable of:
+The repo has some automations ([using GiHub Actions](https://github.com/ruggero95/api-manager/actions)) capable of:
 - building the [news-micro image](https://github.com/ruggero95/api-manager/pkgs/container/api-manager%2Fnews-micro) and pushing it to the GitHub Docker Registry.
 - building the [auth-micro image](https://github.com/ruggero95/api-manager/pkgs/container/api-manager%2Fauth-micro) and pushing it to the GitHub Docker Registry.
 - building the [manager-micro image](https://github.com/ruggero95/api-manager/pkgs/container/api-manager%2Fmanager-micro) and pushing it to the GitHub Docker Registry.
