@@ -28,7 +28,7 @@ else
     echo "No $ENV_FILE file found"
     return
 fi
-ENV_FILE="./gui-api-manager/.env"
+ENV_FILE="./gui/.env"
 if test -f "$ENV_FILE"; then
     export $(grep -v '^#' $ENV_FILE | xargs -0)
 else 
