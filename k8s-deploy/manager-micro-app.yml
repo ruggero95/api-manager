@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: manager-micro-configmap
 data:
+  node_env: production
   manager_port: '4000'
   news_host: http://news-micro-service
   news_port: '3000'
@@ -30,6 +31,11 @@ spec:
         imagePullPolicy: Always
         name: manager-micro
         env:
+          - name: NODE_ENV
+            valueFrom: 
+              configMapKeyRef:
+                name: manager-micro-configmap
+                key: node_env
           - name: MANAGER_PORT
             valueFrom: 
               configMapKeyRef:
