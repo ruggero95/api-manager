@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: auth-micro-configmap
 data:
-  node_env: development
+  node_env: production
 ---
 apiVersion: v1
 kind: Secret
