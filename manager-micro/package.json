@@ -1,6 +1,7 @@
 {
   "name": "manager-micro",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "Manager microservice of api-manager",
   "main": "index.js",
   "scripts": {
