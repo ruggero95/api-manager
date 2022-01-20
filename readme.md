@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="./gui-api-manager/public/favicon_package_v0.16/android-chrome-384x384.png" alt="header" height="200px">
+  <img src="./gui/public/favicon_package_v0.16/android-chrome-384x384.png" alt="header" height="200px">
 </p>
 <h1 align="center">API MANAGER</h1>
 <h3 align="center">A simple API platform. With NEWS API DEMO.</h3>
