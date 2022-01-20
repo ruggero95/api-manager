@@ -5,6 +5,7 @@ metadata:
 data:
   node_env: production
   manager_port: '4000'
+  max_plan_api_requests_per_day: '100'
   news_host: http://news-micro-service
   news_port: '3000'
   auth_host: http://auth-micro-service
@@ -41,6 +42,11 @@ spec:
               configMapKeyRef:
                 name: manager-micro-configmap
                 key: manager_port
+          - name: MAX_PLAN_API_REQUESTS_PER_DAY
+            valueFrom: 
+              configMapKeyRef:
+                name: manager-micro-configmap
+                key: max_plan_api_requests_per_day
           - name: NEWS_HOST
             valueFrom: 
               configMapKeyRef:

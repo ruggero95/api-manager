@@ -1,6 +1,7 @@
 {
   "name": "news-micro",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "News microservice of api-manager",
   "main": "index.js",
   "scripts": {
