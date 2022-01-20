@@ -25,7 +25,23 @@ You can log in and create an api plan. With the generated API KEY, it will be po
 ### Architecture
 ![summary](./.assets/summary.png)
 
+The main components are:
+- a **news-micro**: a microservice capable of returning news.
+- a **auth-micro**: a microservice to manage user authentications.
+- a **manager-micro**: a microservice to manage the proprietary API service, with
+  - creation of new API plan w/ API KEY
+  - counting requests
+  - manage API requests
 
+Extra features are:
+- a GUI to easily use the platform
+
+### Automations
+The repo is equipped with multiple automations [using GiHub Actions](https://github.com/ruggero95/api-manager/actions) capable of:
+- building the [news-micro image](https://github.com/ruggero95/api-manager/pkgs/container/api-manager%2Fnews-micro) and pushing it to the GitHub Docker Registry.
+- building the [auth-micro image](https://github.com/ruggero95/api-manager/pkgs/container/api-manager%2Fauth-micro) and pushing it to the GitHub Docker Registry.
+- building the [manager-micro image](https://github.com/ruggero95/api-manager/pkgs/container/api-manager%2Fmanager-micro) and pushing it to the GitHub Docker Registry.
+- deploying all to virtual machine through SSH connection.
 
 ### Credits
 | [<img src="https://avatars.githubusercontent.com/u/4183824?v=4" width="100px;" alt="derogab"/><br /><sub><b>derogab</b></sub>](https://github.com/derogab) | [<img src="https://avatars.githubusercontent.com/u/9202746?v=4" width="100px;" alt="ruggero95"/><br /><sub><b>ruggero95</b></sub>](https://github.com/ruggero95) | 
