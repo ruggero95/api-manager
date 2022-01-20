@@ -3,7 +3,7 @@ echo "Starting..."
 
 # Clean up
 echo "Cleaning up old tmp..."
-rm -rf ./k8s-deploy-tmp
+rm -rf ./k8s-tmp || echo "No old tmp to clean up"
 
 # Get environment variables
 echo "Getting environment variables..."
@@ -28,7 +28,7 @@ else
     echo "No $ENV_FILE file found"
     return
 fi
-ENV_FILE="./gui-api-manager/.env"
+ENV_FILE="./gui/.env"
 if test -f "$ENV_FILE"; then
     export $(grep -v '^#' $ENV_FILE | xargs -0)
 else 
@@ -47,11 +47,11 @@ export POSTGRES_PASSWORD=$(echo -n $POSTGRES_PASSWORD | base64)
 
 # Copy the k8s config file to a tmp directory
 echo "Copying k8s config file to tmp directory..."
-cp -r ./k8s-deploy ./k8s-deploy-tmp
+cp -r ./k8s ./k8s-tmp
 
 # Replace ENVs in static files
 echo "Replacing secrets in configs files..."
-for filename in ./k8s-deploy-tmp/*.yml; do
+for filename in ./k8s-tmp/*.yml; do
     echo "Replacing secrets in $filename ..."
     sed -i "s|{{REPLACE_HERE_API_KEY}}|$CURRENTS_API_KEY|g" $filename
     sed -i "s|{{REPLACE_HERE_ACCESS_TOKEN}}|$ACCESS_TOKEN|g" $filename
@@ -63,8 +63,8 @@ done
 
 # Start k8s
 echo "Starting k8s..."
-kubectl apply -f ./k8s-deploy-tmp
+kubectl apply -f ./k8s-tmp
 
 # Clean up
 echo "Cleaning up..."
-rm -rf ./k8s-deploy-tmp
+rm -rf ./k8s-tmp
