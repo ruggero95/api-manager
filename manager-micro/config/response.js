@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const response = {
     codes: Object.freeze({
         SUCCESS: 200,
@@ -20,7 +22,7 @@ const response = {
         return res.status(response.codes.UNAUTHORIZED).json({error:true,message:message,data:data,status:response.codes.UNAUTHORIZED})
     },
     internalErrorResponse:(res, message = 'Internal Error', data = null)=>{
-        return res.status(response.codes.INTERNAL_ERROR).json({error:true,message:message,data:data,status:response.codes.INTERNAL_ERROR})
+        return res.status(response.codes.INTERNAL_ERROR).json({error:true,message:(process.env.NODE_ENV && process.env.NODE_ENV=='development') ?  message : 'Internal Error' ,data:data,status:response.codes.INTERNAL_ERROR})
     },
     notFoundResponse:(res, message = 'Not found', data = null)=>{
         return res.status(response.codes.NOT_FOUND).json({error:true,message:message,data:data,status:response.codes.NOT_FOUND})
