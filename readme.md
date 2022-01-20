@@ -29,9 +29,8 @@ The main components are:
 - a **news-micro**: a microservice capable of returning news.
 - a **auth-micro**: a microservice to manage user authentications.
 - a **manager-micro**: a microservice to manage the proprietary API service, with
-  - creation of new API plan w/ API KEY
-  - counting requests
-  - manage API requests
+  - creation and deletion of new API plan w/ API KEY
+  - count and manage API requests
 
 Extra features are:
 - a GUI to easily use the platform
