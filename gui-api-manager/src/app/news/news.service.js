@@ -18,6 +18,7 @@ export const newsService = {
         } catch (e) {
             console.log('errore get news')
             console.log(e)
+            throw(e)
         }
     }
 }
