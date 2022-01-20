@@ -3,6 +3,10 @@ const router = express.Router()
 const planRepository = require('./plan.repository')
 const planService = require('./plan.service')
 const {successResponse, errorResponse, badRequestResponse} = require('./../../config/response')
+
+// init environment variables
+require('dotenv').config();
+
 router.post('/add', async (req, res, next)=>{
     try{
         const user_id = req.body.user_id
@@ -10,7 +14,7 @@ router.post('/add', async (req, res, next)=>{
         if(!user_id || !name){
             return badRequestResponse(res, 'Missing params')
         }
-        const plan = await planService.addPlan(user_id,name)
+        const plan = await planService.addPlan(user_id, name, process.env.MAX_PLAN_API_REQUESTS_PER_DAY || 100)
         if(plan){
             return successResponse(res,'Plan created')
         }
