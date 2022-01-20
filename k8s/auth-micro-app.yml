@@ -33,6 +33,13 @@ spec:
       - image: ghcr.io/ruggero95/api-manager/auth-micro:latest
         imagePullPolicy: Always
         name: auth-micro
+        resources:
+          requests:
+            memory: "16Mi"
+            cpu: "0.10"
+          limits:
+            memory: "512Mi"
+            cpu: "0.75"
         env:
           - name: NODE_ENV
             valueFrom: 
