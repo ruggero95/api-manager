@@ -61,8 +61,8 @@ for filename in ./k8s-deploy-tmp/*.yml; do
     sed -i "s|{{REPLACE_HERE_PG_PASS}}|$POSTGRES_PASSWORD|g" $filename
 done
 
-# Start k8s
-echo "Starting k8s..."
+# Stop k8s
+echo "Stopping k8s..."
 kubectl delete -f ./k8s-deploy-tmp
 
 # Clean up
